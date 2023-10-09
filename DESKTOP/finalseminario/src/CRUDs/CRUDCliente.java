@@ -19,6 +19,7 @@ import org.hibernate.criterion.Restrictions;
  * @author juanl
  */
 public class CRUDCliente {
+   
     public static boolean insert(String nombre, String apellido, String nit, String telefono, String direccion, int usuario) {
         boolean flag = false;
         Date fecha = new Date();
@@ -64,7 +65,4 @@ public class CRUDCliente {
         }
         return flag;
     }
-    
-    
-    
 }
