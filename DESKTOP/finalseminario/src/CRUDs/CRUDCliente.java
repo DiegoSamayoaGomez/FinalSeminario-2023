@@ -99,4 +99,60 @@ public class CRUDCliente {
         }
         return flag;
     }
+    
+    
+    public static boolean anular(Integer idCliente,Integer idUsuario){
+        boolean flag=false;
+        Date fecha = new Date();
+        Session session=HibernateUtil.HibernateUtil.getSessionFactory().openSession();
+        Criteria criteria=session.createCriteria(Cliente.class);
+        criteria.add(Restrictions.eq("idCliente",idCliente));
+        Cliente update=(Cliente)criteria.uniqueResult();
+        Transaction transaction=null;
+        try{
+            transaction=session.beginTransaction();
+            if(update!=null){
+                update.setEstado(false);
+                update.setFechaModifica(fecha);
+                Usuario usuario=new Usuario();
+                usuario.setIdUsuario(idUsuario);
+                update.setUsuarioByUsuarioModifica(usuario);
+                session.update(update);
+                flag=true;
+            }
+            transaction.commit();
+        }catch(Exception e){
+            transaction.rollback();
+            System.out.println("Error: "+e);
+        }finally{
+            session.close();
+        }
+        return flag;
+    }
+    
+    public static boolean eliminar(Integer idCliente,Integer idUsuario){
+        boolean flag=false;
+        Date fecha = new Date();
+        Session session=HibernateUtil.HibernateUtil.getSessionFactory().openSession();
+        Criteria criteria=session.createCriteria(Cliente.class);
+        criteria.add(Restrictions.eq("idCliente",idCliente));
+        Cliente update=(Cliente)criteria.uniqueResult();
+        Transaction transaction=null;
+        try{
+            transaction=session.beginTransaction();
+            if(update!=null){
+                session.delete(update);
+                flag=true;
+            }
+            transaction.commit();
+        }catch(Exception e){
+            transaction.rollback();
+            System.out.println("Error: "+e);
+        }finally{
+            session.close();
+        }
+        return flag;
+    }
+    
+    
 }
