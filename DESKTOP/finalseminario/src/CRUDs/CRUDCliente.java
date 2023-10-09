@@ -8,10 +8,12 @@ package CRUDs;
 import POJOs.Cliente;
 import POJOs.Usuario;
 import java.util.Date;
+import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
 /**
@@ -154,5 +156,35 @@ public class CRUDCliente {
         return flag;
     }
     
+    public static Cliente select(Integer idCliente){
+            Session session=HibernateUtil.HibernateUtil.getSessionFactory().openSession();
+            Criteria criteria=session.createCriteria(Cliente.class);
+            criteria.add(Restrictions.eq("idCliente",idCliente));
+            Cliente select=(Cliente)criteria.uniqueResult();
+            if(select==null){
+                select=new Cliente();
+                select.setIdCliente(0);
+            }
+            session.close();
+            return select;
+        }
     
+    public static List<Cliente> universo(){
+        Session session = HibernateUtil.HibernateUtil.getSessionFactory().getCurrentSession();
+        List<Cliente>lista=null;
+        try{
+            session.beginTransaction();
+            Criteria criteria=session.createCriteria(Cliente.class);
+            criteria.add(Restrictions.eq("estado", true));
+            criteria.addOrder(Order.desc("idCliente"));
+            criteria.setMaxResults(500);
+            lista=criteria.list();
+        }catch(HibernateException e){
+            System.out.println("Error="+e);
+        }finally{
+            session.getTransaction().commit();
+        }
+        return lista;
+              
+    }
 }
