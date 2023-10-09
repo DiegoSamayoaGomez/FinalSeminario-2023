@@ -1,0 +1,41 @@
+[33mcommit b7aadc04a56b978577bc4adf12fde0e3008ffca3[m[33m ([m[1;36mHEAD -> [m[1;32mCRUDCLiente[m[33m)[m
+Author: JuanLariasMendez <jlariasm@miumg.edu.gt>
+Date:   Mon Oct 9 17:16:46 2023 -0600
+
+    Se creo el metodos select y universo
+
+[33mcommit 35e05fa119daa40a8754ed6da973f3955b2682c9[m
+Author: JuanLariasMendez <jlariasm@miumg.edu.gt>
+Date:   Mon Oct 9 17:11:29 2023 -0600
+
+    Se creo el metodo para anular o eliminar definitivamente el cliente
+
+[33mcommit 1c4a8c5c0baf11828b8dd8b16248acf796861b5e[m
+Author: JuanLariasMendez <jlariasm@miumg.edu.gt>
+Date:   Mon Oct 9 17:06:53 2023 -0600
+
+    Se creo el metodo para actualizar
+
+[33mcommit accdc937bf8b4213a807877e41d5e5bb71ae032c[m
+Author: JuanLariasMendez <jlariasm@miumg.edu.gt>
+Date:   Mon Oct 9 16:46:38 2023 -0600
+
+    Se creo el metodo para insertar
+
+[33mcommit 18be5f8a72887e3f1f4f511a923c94156dc98896[m
+Author: JuanLariasMendez <jlariasm@miumg.edu.gt>
+Date:   Mon Oct 9 16:38:35 2023 -0600
+
+    Se creo la carpeta de CRUDs y se creo el CRUD para cliente
+
+[33mcommit c0202b46c49baa6010717dcda7bb0d3a52c17bb9[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmain[m[33m)[m
+Author: DiegoSamayoaGomez <samayoasg2014@gmail.com>
+Date:   Mon Oct 9 13:29:05 2023 -0600
+
+    test
+
+[33mcommit 561f302d2c2af4eaaef0e51acd28dcced60cf4ca[m
+Author: DiegoSamayoaGomez <samayoasg2014@gmail.com>
+Date:   Mon Oct 9 13:27:07 2023 -0600
+
+    Proyecto base

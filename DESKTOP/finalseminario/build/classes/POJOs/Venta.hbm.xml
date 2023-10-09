@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 9/10/2023 01:23:50 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="POJOs.Venta" table="venta" catalog="finalseminario" optimistic-lock="version">
+        <id name="idVenta" type="java.lang.Integer">
+            <column name="ID_VENTA" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="cliente" class="POJOs.Cliente" fetch="select">
+            <column name="ID_CLIENTE" />
+        </many-to-one>
+        <many-to-one name="tipoPago" class="POJOs.TipoPago" fetch="select">
+            <column name="ID_TIPO_PAGO" />
+        </many-to-one>
+        <many-to-one name="usuarioByUsuarioIngresa" class="POJOs.Usuario" fetch="select">
+            <column name="USUARIO_INGRESA" />
+        </many-to-one>
+        <many-to-one name="usuarioByUsuarioModifica" class="POJOs.Usuario" fetch="select">
+            <column name="USUARIO_MODIFICA" />
+        </many-to-one>
+        <property name="estado" type="java.lang.Boolean">
+            <column name="ESTADO" />
+        </property>
+        <property name="nombre" type="string">
+            <column name="NOMBRE" length="50" />
+        </property>
+        <property name="estadoFinalizado" type="java.lang.Boolean">
+            <column name="ESTADO_FINALIZADO" />
+        </property>
+        <property name="fechaVenta" type="date">
+            <column name="FECHA_VENTA" length="10" />
+        </property>
+        <property name="fechaIngresa" type="date">
+            <column name="FECHA_INGRESA" length="10" />
+        </property>
+        <property name="fechaModifica" type="date">
+            <column name="FECHA_MODIFICA" length="10" />
+        </property>
+        <set name="detalleVentas" table="detalle_venta" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="ID_VENTA" />
+            </key>
+            <one-to-many class="POJOs.DetalleVenta" />
+        </set>
+    </class>
+</hibernate-mapping>
