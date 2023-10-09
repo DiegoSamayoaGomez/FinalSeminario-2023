@@ -65,4 +65,38 @@ public class CRUDCliente {
         }
         return flag;
     }
+    
+    public static boolean update(Integer idCliente, String nombre, String apellido, String nit, String telefono, String direccion, int idUsuario){
+        boolean flag=false;
+        Date fecha = new Date();
+        Session session=HibernateUtil.HibernateUtil.getSessionFactory().openSession();
+        Criteria criteria=session.createCriteria(Cliente.class);
+        criteria.add(Restrictions.eq("idCliente",idCliente));
+        Cliente update=(Cliente)criteria.uniqueResult();
+        Transaction transaction=null;
+        try{
+            transaction=session.beginTransaction();
+            if(update!=null){
+                update.setNombre(nombre);
+                update.setApellido(apellido);
+                update.setNit(nit);
+                update.setTelefono(telefono);
+                update.setDireccion(direccion);
+                
+                update.setFechaModifica(fecha);
+                Usuario usuario=new Usuario();
+                usuario.setIdUsuario(idUsuario);
+                update.setUsuarioByUsuarioModifica(usuario);
+                session.update(update);
+                flag=true;
+            }
+            transaction.commit();
+        }catch(Exception e){
+            transaction.rollback();
+            System.out.println("Error: "+e);
+        }finally{
+            session.close();
+        }
+        return flag;
+    }
 }

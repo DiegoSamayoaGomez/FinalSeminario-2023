@@ -15,7 +15,12 @@ public class Finalseminario {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+    //----------------------------CRUD CLIENTE-------------------------------------
+//    System.out.println("Cliente"+CRUDs.CRUDCliente.insert("Juan Amilcar", "Larias Mendez","45454545", "10994808", "Cambote", 1));
+//      System.out.println("update="+CRUDs.CRUDCliente.update(1, "Amilcar", "Larias", "111111", "55555555", "Guate",1)); //IdProducto - "NombreDelProducto" - variablede arriba(precio) - Usuaurio          
+
+
+
     }
     
 }
