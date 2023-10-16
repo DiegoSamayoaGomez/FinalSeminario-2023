@@ -5,11 +5,10 @@
  */
 package finalseminario;
 
-<<<<<<< HEAD
+
 import CRUDs.CRUDCliente;
-=======
 import CRUDs.CRUDProveedor;
->>>>>>> 1566c59cae4e7a63a159dbfcd6778a47b3ede04d
+
 
 /**
  *
@@ -21,7 +20,7 @@ public class Finalseminario {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-<<<<<<< HEAD
+
     //----------------------------CRUD CLIENTE-------------------------------------
 //    System.out.println("Cliente"+CRUDs.CRUDCliente.insert("Juan Amilcar", "Larias Mendez","45454545", "10994808", "Cambote", 1));
 //      System.out.println("update="+CRUDs.CRUDCliente.update(1, "Amilcar", "Larias", "111111", "55555555", "Guate",1)); //IdProducto - "NombreDelProducto" - variablede arriba(precio) - Usuaurio          
@@ -40,7 +39,7 @@ public class Finalseminario {
 //          } 
 
 
-=======
+
         // TODO code application logic here
 
         //CRUD PROVEEDORES
@@ -58,7 +57,7 @@ public class Finalseminario {
 //            System.out.println("3 = " + CRUDProveedor.universo().get(i).getTelefono());
 //
 //        }
->>>>>>> 1566c59cae4e7a63a159dbfcd6778a47b3ede04d
+
     }
 
 }
