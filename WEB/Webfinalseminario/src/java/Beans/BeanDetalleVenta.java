@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Bean;
+package Beans;
 import POJOs.Producto;
 import POJOs.Venta;
 import java.math.BigDecimal;
