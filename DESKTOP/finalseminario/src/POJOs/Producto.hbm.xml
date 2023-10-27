@@ -1,16 +1,13 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 9/10/2023 01:23:50 PM by Hibernate Tools 4.3.1 -->
+<!-- Generated 27/10/2023 03:26:35 PM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="POJOs.Producto" table="producto" catalog="finalseminario" optimistic-lock="version">
         <id name="idProducto" type="int">
             <column name="ID_PRODUCTO" />
             <generator class="assigned" />
         </id>
-        <many-to-one name="categoria" class="POJOs.Categoria" fetch="select">
-            <column name="ID_CATEGORIA" />
-        </many-to-one>
         <many-to-one name="usuarioByUsuarioModifica" class="POJOs.Usuario" fetch="select">
             <column name="USUARIO_MODIFICA" />
         </many-to-one>
@@ -22,9 +19,6 @@
         </property>
         <property name="nombre" type="string">
             <column name="NOMBRE" length="50" />
-        </property>
-        <property name="descripcion" type="string">
-            <column name="DESCRIPCION" length="60" />
         </property>
         <property name="cantidad" type="java.lang.Integer">
             <column name="CANTIDAD" />
@@ -38,17 +32,17 @@
         <property name="fechaModifica" type="date">
             <column name="FECHA_MODIFICA" length="10" />
         </property>
-        <set name="detalleCompras" table="detalle_compra" inverse="true" lazy="true" fetch="select">
-            <key>
-                <column name="ID_PRODUCTO" />
-            </key>
-            <one-to-many class="POJOs.DetalleCompra" />
-        </set>
         <set name="detalleVentas" table="detalle_venta" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="ID_PRODUCTO" />
             </key>
             <one-to-many class="POJOs.DetalleVenta" />
+        </set>
+        <set name="detalleCompras" table="detalle_compra" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="ID_PRODUCTO" />
+            </key>
+            <one-to-many class="POJOs.DetalleCompra" />
         </set>
     </class>
 </hibernate-mapping>

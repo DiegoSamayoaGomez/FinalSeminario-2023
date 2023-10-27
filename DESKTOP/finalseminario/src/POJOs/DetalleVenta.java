@@ -1,5 +1,5 @@
 package POJOs;
-// Generated 9/10/2023 01:23:50 PM by Hibernate Tools 4.3.1
+// Generated 27/10/2023 03:26:35 PM by Hibernate Tools 4.3.1
 
 
 import java.math.BigDecimal;
@@ -10,7 +10,7 @@ import java.math.BigDecimal;
 public class DetalleVenta  implements java.io.Serializable {
 
 
-     private Integer idDetalleVenta;
+     private int idDetalleVenta;
      private Producto producto;
      private Venta venta;
      private Integer cantidad;
@@ -19,18 +19,23 @@ public class DetalleVenta  implements java.io.Serializable {
     public DetalleVenta() {
     }
 
-    public DetalleVenta(Producto producto, Venta venta, Integer cantidad, BigDecimal monto) {
+	
+    public DetalleVenta(int idDetalleVenta) {
+        this.idDetalleVenta = idDetalleVenta;
+    }
+    public DetalleVenta(int idDetalleVenta, Producto producto, Venta venta, Integer cantidad, BigDecimal monto) {
+       this.idDetalleVenta = idDetalleVenta;
        this.producto = producto;
        this.venta = venta;
        this.cantidad = cantidad;
        this.monto = monto;
     }
    
-    public Integer getIdDetalleVenta() {
+    public int getIdDetalleVenta() {
         return this.idDetalleVenta;
     }
     
-    public void setIdDetalleVenta(Integer idDetalleVenta) {
+    public void setIdDetalleVenta(int idDetalleVenta) {
         this.idDetalleVenta = idDetalleVenta;
     }
     public Producto getProducto() {

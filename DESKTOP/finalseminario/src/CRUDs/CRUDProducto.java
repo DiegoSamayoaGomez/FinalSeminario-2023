@@ -22,14 +22,14 @@ import org.hibernate.criterion.Restrictions;
  */
 public class CRUDProducto {
         
-    public static boolean insert(String nombre, String descripcion, int usuario) {
+    public static boolean insert(String nombre, int usuario) {
         boolean flag = false;
         Date fecha = new Date();
         Session session = HibernateUtil.HibernateUtil.getSessionFactory().openSession();
         Criteria criteria = session.createCriteria(Producto.class);
 
         criteria.add(Restrictions.eq("nombre", nombre));
-        criteria.add(Restrictions.eq("descripcion", descripcion));
+ 
 
         criteria.add(Restrictions.eq("estado", true));
         Producto insert = (Producto) criteria.uniqueResult();
@@ -42,8 +42,7 @@ public class CRUDProducto {
                 insert.setEstado(true);
 
                 insert.setNombre(nombre);
-                insert.setDescripcion(descripcion);
-
+          
 
                 Usuario usuario2 = new Usuario();
                 usuario2.setIdUsuario(usuario);
@@ -69,7 +68,7 @@ public class CRUDProducto {
     }
 
     
-        public static boolean update(Integer idProducto, String nombre, String descripcion, int usuario) {
+        public static boolean update(Integer idProducto, String nombre,  int usuario) {
         boolean flag = false;
         Date fecha = new Date();
         Session session = HibernateUtil.HibernateUtil.getSessionFactory().openSession();
@@ -82,7 +81,7 @@ public class CRUDProducto {
             if (update != null) {
                 
                 update.setNombre(nombre);
-                update.setDescripcion(descripcion);
+ 
              
 
                 update.setFechaModifica(fecha);
@@ -106,6 +105,8 @@ public class CRUDProducto {
         return flag;
     }
     
+        
+        //Eliminar no se usa en el sistema final, pero dejarlo por si acaso (Diego)
     public static boolean eliminar(Integer idProducto,Integer idUsuario){
         boolean flag=false;
         Date fecha = new Date();

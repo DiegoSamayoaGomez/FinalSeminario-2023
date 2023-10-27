@@ -1,5 +1,5 @@
 package POJOs;
-// Generated 9/10/2023 01:23:50 PM by Hibernate Tools 4.3.1
+// Generated 27/10/2023 03:26:35 PM by Hibernate Tools 4.3.1
 
 
 import java.util.HashSet;
@@ -16,12 +16,10 @@ public class Usuario  implements java.io.Serializable {
      private Boolean estado;
      private String nombre;
      private String contrasenia;
-     private Set<Categoria> categoriasForUsuarioModifica = new HashSet<Categoria>(0);
      private Set<Proveedor> proveedorsForUsuarioModifica = new HashSet<Proveedor>(0);
      private Set<Proveedor> proveedorsForUsuarioIngresa = new HashSet<Proveedor>(0);
      private Set<Cliente> clientesForUsuarioIngresa = new HashSet<Cliente>(0);
      private Set<Producto> productosForUsuarioModifica = new HashSet<Producto>(0);
-     private Set<Categoria> categoriasForUsuarioIngresa = new HashSet<Categoria>(0);
      private Set<Cliente> clientesForUsuarioModifica = new HashSet<Cliente>(0);
      private Set<Producto> productosForUsuarioIngresa = new HashSet<Producto>(0);
      private Set<Venta> ventasForUsuarioIngresa = new HashSet<Venta>(0);
@@ -36,17 +34,15 @@ public class Usuario  implements java.io.Serializable {
     public Usuario(Rol rol) {
         this.rol = rol;
     }
-    public Usuario(Rol rol, Boolean estado, String nombre, String contrasenia, Set<Categoria> categoriasForUsuarioModifica, Set<Proveedor> proveedorsForUsuarioModifica, Set<Proveedor> proveedorsForUsuarioIngresa, Set<Cliente> clientesForUsuarioIngresa, Set<Producto> productosForUsuarioModifica, Set<Categoria> categoriasForUsuarioIngresa, Set<Cliente> clientesForUsuarioModifica, Set<Producto> productosForUsuarioIngresa, Set<Venta> ventasForUsuarioIngresa, Set<Venta> ventasForUsuarioModifica, Set<Compra> comprasForUsuarioModifica, Set<Compra> comprasForUsuarioIngresa) {
+    public Usuario(Rol rol, Boolean estado, String nombre, String contrasenia, Set<Proveedor> proveedorsForUsuarioModifica, Set<Proveedor> proveedorsForUsuarioIngresa, Set<Cliente> clientesForUsuarioIngresa, Set<Producto> productosForUsuarioModifica, Set<Cliente> clientesForUsuarioModifica, Set<Producto> productosForUsuarioIngresa, Set<Venta> ventasForUsuarioIngresa, Set<Venta> ventasForUsuarioModifica, Set<Compra> comprasForUsuarioModifica, Set<Compra> comprasForUsuarioIngresa) {
        this.rol = rol;
        this.estado = estado;
        this.nombre = nombre;
        this.contrasenia = contrasenia;
-       this.categoriasForUsuarioModifica = categoriasForUsuarioModifica;
        this.proveedorsForUsuarioModifica = proveedorsForUsuarioModifica;
        this.proveedorsForUsuarioIngresa = proveedorsForUsuarioIngresa;
        this.clientesForUsuarioIngresa = clientesForUsuarioIngresa;
        this.productosForUsuarioModifica = productosForUsuarioModifica;
-       this.categoriasForUsuarioIngresa = categoriasForUsuarioIngresa;
        this.clientesForUsuarioModifica = clientesForUsuarioModifica;
        this.productosForUsuarioIngresa = productosForUsuarioIngresa;
        this.ventasForUsuarioIngresa = ventasForUsuarioIngresa;
@@ -90,13 +86,6 @@ public class Usuario  implements java.io.Serializable {
     public void setContrasenia(String contrasenia) {
         this.contrasenia = contrasenia;
     }
-    public Set<Categoria> getCategoriasForUsuarioModifica() {
-        return this.categoriasForUsuarioModifica;
-    }
-    
-    public void setCategoriasForUsuarioModifica(Set<Categoria> categoriasForUsuarioModifica) {
-        this.categoriasForUsuarioModifica = categoriasForUsuarioModifica;
-    }
     public Set<Proveedor> getProveedorsForUsuarioModifica() {
         return this.proveedorsForUsuarioModifica;
     }
@@ -124,13 +113,6 @@ public class Usuario  implements java.io.Serializable {
     
     public void setProductosForUsuarioModifica(Set<Producto> productosForUsuarioModifica) {
         this.productosForUsuarioModifica = productosForUsuarioModifica;
-    }
-    public Set<Categoria> getCategoriasForUsuarioIngresa() {
-        return this.categoriasForUsuarioIngresa;
-    }
-    
-    public void setCategoriasForUsuarioIngresa(Set<Categoria> categoriasForUsuarioIngresa) {
-        this.categoriasForUsuarioIngresa = categoriasForUsuarioIngresa;
     }
     public Set<Cliente> getClientesForUsuarioModifica() {
         return this.clientesForUsuarioModifica;

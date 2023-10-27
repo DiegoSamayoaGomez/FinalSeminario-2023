@@ -1,5 +1,5 @@
 package POJOs;
-// Generated 9/10/2023 01:23:50 PM by Hibernate Tools 4.3.1
+// Generated 27/10/2023 03:26:35 PM by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
@@ -12,7 +12,7 @@ import java.util.Set;
 public class Venta  implements java.io.Serializable {
 
 
-     private Integer idVenta;
+     private int idVenta;
      private Cliente cliente;
      private TipoPago tipoPago;
      private Usuario usuarioByUsuarioIngresa;
@@ -28,7 +28,12 @@ public class Venta  implements java.io.Serializable {
     public Venta() {
     }
 
-    public Venta(Cliente cliente, TipoPago tipoPago, Usuario usuarioByUsuarioIngresa, Usuario usuarioByUsuarioModifica, Boolean estado, String nombre, Boolean estadoFinalizado, Date fechaVenta, Date fechaIngresa, Date fechaModifica, Set<DetalleVenta> detalleVentas) {
+	
+    public Venta(int idVenta) {
+        this.idVenta = idVenta;
+    }
+    public Venta(int idVenta, Cliente cliente, TipoPago tipoPago, Usuario usuarioByUsuarioIngresa, Usuario usuarioByUsuarioModifica, Boolean estado, String nombre, Boolean estadoFinalizado, Date fechaVenta, Date fechaIngresa, Date fechaModifica, Set<DetalleVenta> detalleVentas) {
+       this.idVenta = idVenta;
        this.cliente = cliente;
        this.tipoPago = tipoPago;
        this.usuarioByUsuarioIngresa = usuarioByUsuarioIngresa;
@@ -42,11 +47,11 @@ public class Venta  implements java.io.Serializable {
        this.detalleVentas = detalleVentas;
     }
    
-    public Integer getIdVenta() {
+    public int getIdVenta() {
         return this.idVenta;
     }
     
-    public void setIdVenta(Integer idVenta) {
+    public void setIdVenta(int idVenta) {
         this.idVenta = idVenta;
     }
     public Cliente getCliente() {

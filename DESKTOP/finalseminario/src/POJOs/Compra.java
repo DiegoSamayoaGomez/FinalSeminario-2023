@@ -1,5 +1,5 @@
 package POJOs;
-// Generated 9/10/2023 01:23:50 PM by Hibernate Tools 4.3.1
+// Generated 27/10/2023 03:26:35 PM by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
@@ -12,7 +12,7 @@ import java.util.Set;
 public class Compra  implements java.io.Serializable {
 
 
-     private Integer idCompra;
+     private int idCompra;
      private Proveedor proveedor;
      private TipoPago tipoPago;
      private Usuario usuarioByUsuarioModifica;
@@ -28,7 +28,12 @@ public class Compra  implements java.io.Serializable {
     public Compra() {
     }
 
-    public Compra(Proveedor proveedor, TipoPago tipoPago, Usuario usuarioByUsuarioModifica, Usuario usuarioByUsuarioIngresa, Boolean estado, String nombre, Boolean estadoFinalizado, Date fechaCompra, Date fechaIngresa, Date fechaModifica, Set<DetalleCompra> detalleCompras) {
+	
+    public Compra(int idCompra) {
+        this.idCompra = idCompra;
+    }
+    public Compra(int idCompra, Proveedor proveedor, TipoPago tipoPago, Usuario usuarioByUsuarioModifica, Usuario usuarioByUsuarioIngresa, Boolean estado, String nombre, Boolean estadoFinalizado, Date fechaCompra, Date fechaIngresa, Date fechaModifica, Set<DetalleCompra> detalleCompras) {
+       this.idCompra = idCompra;
        this.proveedor = proveedor;
        this.tipoPago = tipoPago;
        this.usuarioByUsuarioModifica = usuarioByUsuarioModifica;
@@ -42,11 +47,11 @@ public class Compra  implements java.io.Serializable {
        this.detalleCompras = detalleCompras;
     }
    
-    public Integer getIdCompra() {
+    public int getIdCompra() {
         return this.idCompra;
     }
     
-    public void setIdCompra(Integer idCompra) {
+    public void setIdCompra(int idCompra) {
         this.idCompra = idCompra;
     }
     public Proveedor getProveedor() {

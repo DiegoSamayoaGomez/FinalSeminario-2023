@@ -20,10 +20,10 @@ import org.hibernate.criterion.Restrictions;
 
 /**
  *
- * @author Pit
+ * @author Samayoa
  */
-public class CRUDDetalle_venta {
-    public static boolean insert(Integer idProducto, Integer idVenta, Integer cantidad, BigDecimal monto) {
+public class CRUDVentaDetalle {
+        public static boolean insert(Integer idProducto, Integer idVenta, Integer cantidad, BigDecimal monto) {
         boolean flag = false;
         Date fecha = new Date();
         Session session = HibernateUtil.HibernateUtil.getSessionFactory().openSession();
@@ -105,6 +105,8 @@ public class CRUDDetalle_venta {
         return lista;
     }
     
+    
+    //Esto no sé que hace, pero no es montoTotal por si está la duda (Diego)
     public static DetalleVenta select(Integer idDetalleVenta) {
         Session session = HibernateUtil.HibernateUtil.getSessionFactory().openSession();
         Criteria criteria = session.createCriteria(DetalleVenta.class);
@@ -117,4 +119,6 @@ public class CRUDDetalle_venta {
         session.close();
         return select;
     }
+    
+    
 }

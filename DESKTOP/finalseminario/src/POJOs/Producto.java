@@ -1,5 +1,5 @@
 package POJOs;
-// Generated 9/10/2023 01:23:50 PM by Hibernate Tools 4.3.1
+// Generated 27/10/2023 03:26:35 PM by Hibernate Tools 4.3.1
 
 
 import java.math.BigDecimal;
@@ -14,18 +14,16 @@ public class Producto  implements java.io.Serializable {
 
 
      private int idProducto;
-     private Categoria categoria;
      private Usuario usuarioByUsuarioModifica;
      private Usuario usuarioByUsuarioIngresa;
      private Boolean estado;
      private String nombre;
-     private String descripcion;
      private Integer cantidad;
      private BigDecimal precio;
      private Date fechaIngresa;
      private Date fechaModifica;
-     private Set<DetalleCompra> detalleCompras = new HashSet<DetalleCompra>(0);
      private Set<DetalleVenta> detalleVentas = new HashSet<DetalleVenta>(0);
+     private Set<DetalleCompra> detalleCompras = new HashSet<DetalleCompra>(0);
 
     public Producto() {
     }
@@ -34,20 +32,18 @@ public class Producto  implements java.io.Serializable {
     public Producto(int idProducto) {
         this.idProducto = idProducto;
     }
-    public Producto(int idProducto, Categoria categoria, Usuario usuarioByUsuarioModifica, Usuario usuarioByUsuarioIngresa, Boolean estado, String nombre, String descripcion, Integer cantidad, BigDecimal precio, Date fechaIngresa, Date fechaModifica, Set<DetalleCompra> detalleCompras, Set<DetalleVenta> detalleVentas) {
+    public Producto(int idProducto, Usuario usuarioByUsuarioModifica, Usuario usuarioByUsuarioIngresa, Boolean estado, String nombre, Integer cantidad, BigDecimal precio, Date fechaIngresa, Date fechaModifica, Set<DetalleVenta> detalleVentas, Set<DetalleCompra> detalleCompras) {
        this.idProducto = idProducto;
-       this.categoria = categoria;
        this.usuarioByUsuarioModifica = usuarioByUsuarioModifica;
        this.usuarioByUsuarioIngresa = usuarioByUsuarioIngresa;
        this.estado = estado;
        this.nombre = nombre;
-       this.descripcion = descripcion;
        this.cantidad = cantidad;
        this.precio = precio;
        this.fechaIngresa = fechaIngresa;
        this.fechaModifica = fechaModifica;
-       this.detalleCompras = detalleCompras;
        this.detalleVentas = detalleVentas;
+       this.detalleCompras = detalleCompras;
     }
    
     public int getIdProducto() {
@@ -56,13 +52,6 @@ public class Producto  implements java.io.Serializable {
     
     public void setIdProducto(int idProducto) {
         this.idProducto = idProducto;
-    }
-    public Categoria getCategoria() {
-        return this.categoria;
-    }
-    
-    public void setCategoria(Categoria categoria) {
-        this.categoria = categoria;
     }
     public Usuario getUsuarioByUsuarioModifica() {
         return this.usuarioByUsuarioModifica;
@@ -92,13 +81,6 @@ public class Producto  implements java.io.Serializable {
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
-    public String getDescripcion() {
-        return this.descripcion;
-    }
-    
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
-    }
     public Integer getCantidad() {
         return this.cantidad;
     }
@@ -127,19 +109,19 @@ public class Producto  implements java.io.Serializable {
     public void setFechaModifica(Date fechaModifica) {
         this.fechaModifica = fechaModifica;
     }
-    public Set<DetalleCompra> getDetalleCompras() {
-        return this.detalleCompras;
-    }
-    
-    public void setDetalleCompras(Set<DetalleCompra> detalleCompras) {
-        this.detalleCompras = detalleCompras;
-    }
     public Set<DetalleVenta> getDetalleVentas() {
         return this.detalleVentas;
     }
     
     public void setDetalleVentas(Set<DetalleVenta> detalleVentas) {
         this.detalleVentas = detalleVentas;
+    }
+    public Set<DetalleCompra> getDetalleCompras() {
+        return this.detalleCompras;
+    }
+    
+    public void setDetalleCompras(Set<DetalleCompra> detalleCompras) {
+        this.detalleCompras = detalleCompras;
     }
 
 
