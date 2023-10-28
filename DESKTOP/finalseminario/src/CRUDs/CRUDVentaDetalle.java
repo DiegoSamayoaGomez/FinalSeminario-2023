@@ -9,13 +9,16 @@ import POJOs.DetalleVenta;
 import POJOs.Producto;
 import POJOs.Venta;
 import java.math.BigDecimal;
+import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 
 /**
@@ -106,6 +109,17 @@ public class CRUDVentaDetalle {
         return lista;
     }
 
+    //Select monto total
+    public static List<DetalleVenta> selectMontoTotalVenta(Integer idVenta) throws ParseException {
+        Session session = HibernateUtil.HibernateUtil.getSessionFactory().getCurrentSession();
+        session.beginTransaction();
+
+        Query query = session.createSQLQuery("call procedimientoTotalVenta(" + idVenta + ");");
+        List<DetalleVenta> listDatos = query.list();
+        session.getTransaction().commit();
+        return listDatos;
+    }
+
     //Esto no sé que hace, pero no es montoTotal por si está la duda (Diego)
     public static DetalleVenta select(Integer idDetalleVenta) {
         Session session = HibernateUtil.HibernateUtil.getSessionFactory().openSession();
@@ -118,6 +132,45 @@ public class CRUDVentaDetalle {
         }
         session.close();
         return select;
+    }
+
+    //Reportes    
+    public static List<DetalleVenta> reporteCompra(Integer idVenta) {
+        Session session = HibernateUtil.HibernateUtil.getSessionFactory().getCurrentSession();
+        List<DetalleVenta> lista = null;
+        try {
+            session.beginTransaction();
+            Criteria criteria = session.createCriteria(DetalleVenta.class);
+
+            //Cargar los datos de otra clase
+            criteria.createAlias("venta", "v");
+            criteria.createAlias("producto", "p");
+            criteria.createAlias("v.cliente", "c");
+            criteria.createAlias("v.tipoPago", "f");
+            criteria.createAlias("v.usuarioByUsuarioIngresa", "u");
+
+            criteria.setProjection(Projections.projectionList()
+                    .add(Projections.property("v.idVenta"))
+                    .add(Projections.property("c.nombre"))
+                    .add(Projections.property("v.fechaVenta"))
+                    .add(Projections.property("f.nombre"))
+                    .add(Projections.property("p.nombre"))
+                    .add(Projections.property("cantidad"))
+                    .add(Projections.property("monto"))
+                    .add(Projections.property("u.nombre"))
+            );
+
+            criteria.add(Restrictions.eq("v.idVenta", idVenta));
+            criteria.addOrder(Order.desc("idCompraDetalle"));
+            criteria.setMaxResults(500); // se limita la cantidad de datos a mostrar
+            lista = criteria.list();
+
+        } catch (HibernateException e) {
+            System.out.println("Error" + e);
+        } finally {
+            session.getTransaction().commit(); //La sesion se cierra de forma distinta al update e insert
+        }
+        return lista;
     }
 
 }
