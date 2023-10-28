@@ -1,11 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
 <!DOCTYPE html>
-<html xmlns="http://www.w3c.org/1999/xhtml"
-        xmlns:h="http://java.sun.com/jsf/html"
-        xmlns:p="http://primefaces.org/ui"
-        xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
     <h:head>
+        <title>Menú principal</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"/>
+        <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
     </h:head>
+
+
+
     <h:body>
-        <p:inputText value="#{bean.value}" pt:placeholder="Watermark here"/>
+
+        <div class="card">
+
+            <div class="card-body m-3">
+                <blockquote class="blockquote mb-0 text-center">
+                    <p>Menú principal</p>
+                </blockquote>
+            </div>
+
+        </div>
+
+
+        <div class="card-group m-3">
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="card">
+                  
+                        <img src="./Imagenes/testHoja.jpg" class="card-img-top" alt="No encontrado"/>
+                        <div class="card-body">
+                            <h5 class="card-title">Título</h5>
+                            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                            <a href="#" class="btn btn-primary">Vamos</a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+        <h:form>            
+            <p:dock position="bottom">                
+                <p:menuitem value="Clientes" icon="/Imagenes/cliente.png" url="#"/>
+                <p:menuitem value="Ventas" icon="/Imagenes/venta.png" url="#"/>
+                <p:menuitem value="Productos" icon="/Imagenes/producto.png" url="#"/>
+                <p:menuitem value="Proveedor" icon="/Imagenes/proveedor.png" url="#"/>
+                <p:menuitem value="Compras" icon="/Imagenes/compra.png" url="#"/>
+            </p:dock>
+        </h:form>
     </h:body>
+
 </html>

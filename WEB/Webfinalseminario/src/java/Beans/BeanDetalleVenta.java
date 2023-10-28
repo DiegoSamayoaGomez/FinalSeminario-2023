@@ -31,7 +31,7 @@ public class BeanDetalleVenta {
     
     @PostConstruct
     public void mostrar(){
-        setListaDetalleVenta(CRUDs.CRUDDetalle_venta.universo());
+        setListaDetalleVenta(CRUDs.CRUDVentaDetalle.universo());
     }
     
     public void limpiar(){
@@ -45,7 +45,7 @@ public class BeanDetalleVenta {
     public void insertar(){
         FacesContext context=FacesContext.getCurrentInstance();
         try{
-            boolean flag=CRUDs.CRUDDetalle_venta.insert(producto, venta, cantidad, monto);
+            boolean flag=CRUDs.CRUDVentaDetalle.insert(producto, venta, cantidad, monto);
             if(flag){
                 mostrar();
                 limpiar();
@@ -62,7 +62,7 @@ public class BeanDetalleVenta {
     public void eliminar(){
         FacesContext context=FacesContext.getCurrentInstance();
         try{
-            boolean flag=CRUDs.CRUDDetalle_venta.eliminar(getIdDetalleVenta());
+            boolean flag=CRUDs.CRUDVentaDetalle.eliminar(getIdDetalleVenta());
             if(flag){
                 mostrar();
                 limpiar(); 
