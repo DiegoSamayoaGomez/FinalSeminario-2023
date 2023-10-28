@@ -5,10 +5,10 @@
  */
 package CRUDs;
 
-import POJOs.Cliente;
+import POJOs.Compra;
+import POJOs.Proveedor;
 import POJOs.TipoPago;
 import POJOs.Usuario;
-import POJOs.Venta;
 import java.util.Date;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
@@ -22,30 +22,31 @@ import org.hibernate.criterion.Restrictions;
  */
 public class CRUDCompra {
 
-    public static boolean insert(Integer idCliente, Integer idTipoPago, Integer idUsuario) {
+    public static boolean insert(Integer idProveedor, Integer idTipoPago, Integer idUsuario) {
         boolean flag = false;
         Date fecha = new Date();
         Session session = HibernateUtil.HibernateUtil.getSessionFactory().openSession();
-        Criteria criteria = session.createCriteria(Venta.class);
+        Criteria criteria = session.createCriteria(Compra.class);
         criteria.add(Restrictions.eq("estadoFinalizado", false));
         criteria.add(Restrictions.eq("usuarioByUsuarioIngresa.idUsuario", idUsuario));
         //No deja tener 2 nombres iguales mientras esta activo
 
         criteria.add(Restrictions.eq("estado", true));
-        Venta insert = (Venta) criteria.uniqueResult(); //Hace una comparativa y permite hacer la exclusiion
+        Compra insert = (Compra) criteria.uniqueResult(); //Hace una comparativa y permite hacer la exclusiion
         Transaction transaction = null;
         try {
             transaction = session.beginTransaction();
             if (insert == null) {
-                insert = new Venta(); //solo se usa cuando se inserta algo completamente nuevo
+                insert = new Compra(); //solo se usa cuando se inserta algo completamente nuevo
 
                 insert.setEstado(true);
                 insert.setEstadoFinalizado(false);
-                Cliente cliente = new Cliente();
-                cliente.setIdCliente(idCliente);
-                insert.setCliente(cliente);
 
-                insert.setFechaVenta(fecha);
+                Proveedor proveedor = new Proveedor();
+                proveedor.setIdProveedor(idProveedor);
+
+                insert.setProveedor(proveedor);
+                insert.setFechaCompra(fecha);
 
                 TipoPago tipoPago = new TipoPago();
                 tipoPago.setIdTipoPago(idTipoPago);
@@ -74,38 +75,34 @@ public class CRUDCompra {
 
         return flag;
     }
-    
-    
-    
-    
-    public static Venta select(Usuario usuario) {
+
+    public static Compra select(Usuario usuario) {
         Session session = HibernateUtil.HibernateUtil.getSessionFactory().openSession();
-        Criteria criteria = session.createCriteria(Venta.class);
+        Criteria criteria = session.createCriteria(Compra.class);
         criteria.add(Restrictions.eq("estadoFinalizado", false));
         criteria.add(Restrictions.eq("usuarioByUsuarioIngresa", usuario));
-        
-        Venta select = (Venta) criteria.uniqueResult();
+
+        Compra select = (Compra) criteria.uniqueResult();
         if (select == null) {
-            select = new Venta();
-            select.setIdVenta(0);
+            select = new Compra();
+            select.setIdCompra(0);
         }
         session.close();
         return select;
     }
-    
-    
-         public static boolean update(Integer idVenta) {
+
+    public static boolean update(Integer idCompra) {
         boolean flag = false;
         Session session = HibernateUtil.HibernateUtil.getSessionFactory().openSession();
-        Criteria criteria = session.createCriteria(Venta.class);
+        Criteria criteria = session.createCriteria(Compra.class);
         //Las comillas son el nombre de lavariable de SQL
-        criteria.add(Restrictions.eq("idVenta", idVenta));
-        Venta update = (Venta) criteria.uniqueResult();
+        criteria.add(Restrictions.eq("idCompra", idCompra));
+        Compra update = (Compra) criteria.uniqueResult();
         Transaction transaction = null;
         try {
             transaction = session.beginTransaction();
             if (update != null) {
-                update.setEstadoFinalizado(true);              
+                update.setEstadoFinalizado(true);
                 session.update(update);
                 flag = true;
 
@@ -120,5 +117,5 @@ public class CRUDCompra {
         return flag;
 
     }
-    
+
 }
