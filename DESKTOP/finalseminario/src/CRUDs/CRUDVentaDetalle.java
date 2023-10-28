@@ -149,7 +149,7 @@ public class CRUDVentaDetalle {
     }
 
     //Reportes    
-    public static List<DetalleVenta> reporteCompra(Integer idVenta) {
+    public static List<DetalleVenta> reporteVenta(Integer idVenta) {
         Session session = HibernateUtil.HibernateUtil.getSessionFactory().getCurrentSession();
         List<DetalleVenta> lista = null;
         try {
@@ -175,7 +175,7 @@ public class CRUDVentaDetalle {
             );
 
             criteria.add(Restrictions.eq("v.idVenta", idVenta));
-            criteria.addOrder(Order.desc("idCompraDetalle"));
+            criteria.addOrder(Order.desc("idDetalleVenta"));
             criteria.setMaxResults(500); // se limita la cantidad de datos a mostrar
             lista = criteria.list();
 

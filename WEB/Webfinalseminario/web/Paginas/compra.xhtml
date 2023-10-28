@@ -1,0 +1,126 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+
+    <!-- dsad -->
+
+    <!-- Encabezado -->
+    <h:head>
+        <title>Compras</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </h:head>
+
+    <!-- Cuerpo (body) -->
+    <h:body>
+
+
+        <!-- Encabezado de venta (CRUDVenta)-->
+        <h:form id="venta">
+            <p:growl id="growl" life="2000" showDetail="true"/>
+            <p:panel header="Compras">
+                <p:panelGrid columns="4">
+
+                    <p:selectOneMenu disabled="#{beanCompra.componentes}" id="idProveedor" value="#{beanCompra.idProveedor}"
+                                     panelStyle="width:180px"
+                                     filter="true"  filterNormalize="true">
+
+                        <f:selectItem itemLabel="Seleccione un proveedor" itemValue=""></f:selectItem>
+                        <f:selectItems value="#{beanCompra.listaProveedor}"/>
+                    </p:selectOneMenu>
+
+                    <p:selectOneMenu disabled="#{beanCompra.componentes}" id="idFormaPago" value="#{beanCompra.idTipoPago}"
+                                     panelStyle="width:180px"
+                                     filter="true"  filterNormalize="true">
+
+                        <f:selectItem itemLabel="Seleccione una forma de pago" itemValue=""></f:selectItem>
+                        <f:selectItems value="#{beanCompra.listaFormaPago}"/>
+                    </p:selectOneMenu>
+
+                    <p:commandButton id = "guardar" value="Guardar" update ="@form" styleClass="rounded-button ui-button-success" actionListener="#{beanCompra.insertar()}" />
+                </p:panelGrid>
+            </p:panel>
+        </h:form>
+        <!-- Fin Encabezado de venta (CRUDVenta)-->
+
+        <!-- Venta detalle (CRUDVentaDetalle)-->
+        <h:form id="detalle">
+            <p:growl id="growl" life="2000" showDetail="true"/>
+            <p:panel header="Detalle compra">
+                <p:panelGrid columns="4">
+                    <p:selectOneMenu id="producto" value="#{beanCompra.idProducto}"
+                                     panelStyle="width:180px"
+                                     filter="true"  filterNormalize="true">
+
+                        <f:selectItem itemLabel="Seleccione un producto" itemValue=""></f:selectItem>
+                        <f:selectItems value="#{beanCompra.listaProducto}"/>
+                        <f:ajax listener="#{beanCompra.precio()}" render ="monto"/>
+                    </p:selectOneMenu>
+                </p:panelGrid>
+
+                <h5>Cantidad</h5>
+                <h:inputText id="Cantidad" styleClass="cantidad" class="form-control" value="#{beanCompra.cantidad}"  onkeypress="if (event.keyCode === 13) {#{beanCompra.montoTotal()};
+                            return false;
+                        }">
+                    <p:ajax event="keyup" update=":detalle:montoTotal" listener="#{beanCompra.montoTotal()}" />
+                </h:inputText>
+
+                <h5>Monto</h5>
+                <p:inputText id="monto" label="monto" value="#{beanCompra.monto}" disabled="true"></p:inputText>
+
+                <h5>Monto total</h5>
+                <p:inputText id="montoTotal" label="monto" value="#{beanCompra.montoTotal}" disabled="true"></p:inputText>
+
+                <br></br>
+                <br></br>
+                <p:commandButton id = "guardar" value="Guardar" update ="@form, table" styleClass="rounded-button ui-button-success" actionListener="#{beanCompra.insertarDetalle()}" />
+
+            </p:panel>
+        </h:form>
+        <!-- Fin Venta detalle (CRUDVentaDetalle)-->
+
+
+        <!-- Tabla que muestra todos los productos seleccionados -->
+        <h:form id="table">
+            <p:growl id="growl" life="2000" showDetail="true"/>
+            <p:panel header="Tabla">
+                <div class="card">
+                    <p:dataTable var="product" value="#{beanCompra.listaCompraDetalle}" rowsPerPageTemplate="5,10,15" paginator="true" rows="5">
+                        <p:column headerText="Producto" sortBy="#{product.nombre}" filterBy="#{product.nombre}">
+                            <h:outputText value="#{product.nombre}" /> 
+                        </p:column>
+
+                        <p:column headerText="Cantidad" sortBy="#{product.cantidad}" filterBy="#{product.cantidad}">
+                            <h:outputText value="#{product.cantidad}" />
+                        </p:column>
+
+                        <p:column headerText="Precio" sortBy="#{product.precio}" filterBy="#{product.precio}">
+                            <h:outputText value="#{product.precio}" />
+                        </p:column>
+
+                        <p:column headerText="Total" sortBy="#{product.total}" filterBy="#{product.total}">
+                            <h:outputText value="#{product.total}" />
+                        </p:column>
+
+                        <p:column headerText="Eliminar">
+                            <p:commandButton value="Eliminar"  update="table, detalle" styleClass="rounded-button" onclick="PF('dlg2').show()" actionListener="#{beanCompra.seleccionarDatos(product)}"  />
+                        </p:column>
+
+                    </p:dataTable>
+                </div>
+            </p:panel>
+            <center>
+                <b> <h5>Total</h5>
+                    <p:inputText id="montoTotal" label="montoTotal" value="#{beanCompra.totalFactura}" disabled="true"></p:inputText>
+                </b>
+                <h:commandLink id="confirmar" value="Cerrar venta" class="btn btn-primary" actionListener="#{beanCompra.cerrarCompra()}"/>
+            </center>
+
+        </h:form>
+
+        <!-- Fin tabla que muestra todos los productos seleccionados -->
+    </h:body>
+</html>

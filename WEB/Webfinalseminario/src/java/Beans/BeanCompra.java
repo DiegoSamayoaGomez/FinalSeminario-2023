@@ -1,10 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Beans;
 
+import CRUDs.CRUDCompraDetalle;
 import CRUDs.CRUDVentaDetalle;
 import POJOs.Usuario;
 import finalseminario.Finalseminario;
@@ -26,9 +22,6 @@ import javax.faces.model.SelectItem;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JasperRunManager;
-import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
-import reportefinalseminario.factory;
 
 /**
  *
@@ -36,49 +29,48 @@ import reportefinalseminario.factory;
  */
 @ManagedBean //usados para conectar con el backend
 @ViewScoped //usados para conectar con el backend
-public class BeanVenta {
+public class BeanCompra {
+    //Compra
 
-    //Venta
-    private Integer idCliente;
+    private Integer idProveedor;
     private Integer idTipoPago;
-    //Venta Detalle
-    private Integer idVenta;
+    //Compra Detalle
+    private Integer idCompra;
     private Integer idProducto;
     private Integer cantidad = 0;
     private BigDecimal monto = new BigDecimal(0);
-    private List ListaCliente;
+    private List ListaProveedor;
     private List listaFormaPago;
     private List listaProducto;
     private boolean componentes = false;
-    private ArrayList<listaVentaDetalle> listaVentaDetalle = new ArrayList<listaVentaDetalle>();
+    private ArrayList<listaCompraDetalle> listaCompraDetalle = new ArrayList<listaCompraDetalle>();
     private BigDecimal montoTotal;
     private BigDecimal totalFactura;
     //Reportes
-    private List listaReporteVenta;
+    private List listaReporteCompra;
 
-/////////////////////CODIGO PROPIO//////////////
     //Funciones
     //Carga automática de funciones al abrir la vista
     @PostConstruct //carga los items 
     public void inicio() {
-        llenarComboCliente();
+        llenarComboProveedor();
         llenarComboFormaPago();
         llenarComboProducto();
         mostrar();
         mostrarDetalle();
     }
 
-    //Venta (Encabezado)
-    //Dropdown list para obtener todos los clientes registrados
-    public List<SelectItem> llenarComboCliente() {
-        setListaCliente(new ArrayList<SelectItem>());
-        List<POJOs.Cliente> lstCliente = CRUDs.CRUDCliente.universo();
-        for (POJOs.Cliente cliente : lstCliente) {
+    //Compra (Encabezado)
+    //Dropdown list para obtener todos los proveedores registrados
+    public List<SelectItem> llenarComboProveedor() {
+        setListaProveedor(new ArrayList<SelectItem>());
+        List<POJOs.Proveedor> lstProveedor = CRUDs.CRUDProveedor.universo();
+        for (POJOs.Proveedor proveedor : lstProveedor) {
 
-            SelectItem clienteItem = new SelectItem(cliente.getIdCliente(), "Nombre " + cliente.getNombre() + " Apellido =" + cliente.getApellido());
-            getListaCliente().add(clienteItem);
+            SelectItem clienteItem = new SelectItem(proveedor.getIdProveedor(), proveedor.getNombre());
+            getListaProveedor().add(clienteItem);
         }
-        return getListaCliente();
+        return getListaProveedor();
     }
 
     //Dropdown list para obtener todos los tipos de pago registrados
@@ -90,7 +82,7 @@ public class BeanVenta {
             SelectItem formaPagoItem = new SelectItem(formaPago.getIdTipoPago(), formaPago.getNombre());
             getListaFormaPago().add(formaPagoItem);
         }
-        return getListaCliente();
+        return getListaProveedor();
     }
 
     //Insertar venta (bloquear encabezado con cliente y tipo de pago)
@@ -99,15 +91,16 @@ public class BeanVenta {
         try {
             Usuario usuario = new Usuario();
             usuario.setIdUsuario(1);
-            boolean flag = CRUDs.CRUDVenta.insert(idCliente, idTipoPago, 1);
+            //boolean flag = CRUDs.CRUDCompra.insert(idProveedor, idTipoPago, 1);
+            boolean flag = CRUDs.CRUDCompra.insert(idProveedor, idTipoPago, 1);
             if (flag) {
 
                 componentes = true;
-                context.addMessage(null, new FacesMessage("Exito", "Venta Ingresada"));
+                context.addMessage(null, new FacesMessage("Exito", "Compra Ingresada"));
                 mostrar();
 
             } else {
-                context.addMessage(null, new FacesMessage("Error", "Venta fallida"));
+                context.addMessage(null, new FacesMessage("Error", "Compra fallida"));
 
             }
 
@@ -119,9 +112,6 @@ public class BeanVenta {
 
     }
 
-    //Fin venta (Encabezado)
-    //Detalle venta
-    //Dropdown list para obtener todos los productos registrados
     public List<SelectItem> llenarComboProducto() {
         setListaProducto(new ArrayList<SelectItem>());
         List<POJOs.Producto> lstProducto = CRUDs.CRUDProducto.universo();
@@ -133,24 +123,23 @@ public class BeanVenta {
         return getListaProducto();
     }
 
-    //Fin detalle venta
-    //Tabla con productos seleccionados
-    //Mostrar detalles de la tabla 
     public void mostrarDetalle() {
-        totalVenta();
+        totalCompra();
         tablaDetalle();
     }
-//Obtener el ID de venta e información del encabezado
 
     public void mostrar() {
         Usuario usuario = new Usuario();
         usuario.setIdUsuario(1);
-        idVenta = CRUDs.CRUDVenta.select(usuario).getIdVenta();
-        System.out.println("id venta " + idVenta);
+        //idVenta = CRUDs.CRUDVenta.select(usuario).getIdVenta();
+        idCompra = CRUDs.CRUDCompra.select(usuario).getIdCompra();
 
-        if (idVenta != 0) {
-            idCliente = CRUDs.CRUDVenta.select(usuario).getCliente().getIdCliente();
-            idTipoPago = CRUDs.CRUDVenta.select(usuario).getTipoPago().getIdTipoPago();
+        System.out.println("id compra " + idCompra);
+
+        if (idCompra != 0) {
+            idProveedor = CRUDs.CRUDCompra.select(usuario).getProveedor().getIdProveedor();
+            //idCliente = CRUDs.CRUDVenta.select(usuario).getCliente().getIdCliente();
+            idTipoPago = CRUDs.CRUDCompra.select(usuario).getTipoPago().getIdTipoPago();
             componentes = true;
             mostrarDetalle();
         } else {
@@ -169,19 +158,19 @@ public class BeanVenta {
         FacesContext context = FacesContext.getCurrentInstance();
 
         try {
-            System.out.println("id producto+" + idProducto + " cantidad=" + cantidad + " monto=" + monto);
-            boolean flag = CRUDs.CRUDVentaDetalle.insert(idProducto, idVenta, cantidad, monto);
+            //System.out.println("id producto+" + idProducto + " cantidad=" + cantidad + " monto=" + monto);
+            boolean flag = CRUDs.CRUDCompraDetalle.insert(idProducto, idCompra, cantidad, monto);
+//boolean flag = CRUDs.CRUDVentaDetalle.insert(idProducto, idVenta, cantidad, monto);
             //POR SI FALLA: CAMBIAR EL ORDEN DESDE CRUDS AL DE ABAJO
             //boolean flag = CRUDs.CRUDVentaDetalle.insert(idVenta, idProducto, cantidad, monto);
-
             if (flag) {
                 limpiarDetalle();
                 mostrarDetalle();
                 componentes = true;
-                context.addMessage(null, new FacesMessage("Exito", "Venta Ingresada"));
+                context.addMessage(null, new FacesMessage("Exito", "Compra Ingresada"));
 
             } else {
-                context.addMessage(null, new FacesMessage("Error", "Venta fallida"));
+                context.addMessage(null, new FacesMessage("Error", "Compra fallida"));
 
             }
 
@@ -193,13 +182,13 @@ public class BeanVenta {
 
     }
 
-    public void seleccionarDatos(listaVentaDetalle ventaDetalle) {
+    public void seleccionarDatos(listaCompraDetalle compraDetalle) {
         FacesContext context = FacesContext.getCurrentInstance();
         try {
             //System.out.println("venta detalle = " + ventaDetalle);
             //boolean flag = CRUDs.CRUDVentaDetalle.eliminar(ventaDetalle.getIdVentaDetalle());
-            boolean flag = CRUDs.CRUDVentaDetalle.eliminar(ventaDetalle.getIdDetalleVenta());
-
+            //boolean flag = CRUDs.CRUDVentaDetalle.eliminar(ventaDetalle.getIdDetalleVenta());
+            boolean flag = CRUDs.CRUDCompraDetalle.eliminar(compraDetalle.getIdDetalleCompra());
             if (flag) {
                 mostrarDetalle();
                 limpiarDetalle();
@@ -211,15 +200,16 @@ public class BeanVenta {
             }
 
         } catch (Exception e) {
-            context.addMessage(null, new FacesMessage("Error ", "Error" + e));
+            context.addMessage(null, new FacesMessage("Error", "Error" + e));
 
         }
 
     }
 
-    public void totalVenta() {
+    public void totalCompra() {
         try {
-            for (Iterator it = CRUDVentaDetalle.selectMontoTotalVenta(idVenta).iterator(); it.hasNext();) {
+            //for (Iterator it = CRUDVentaDetalle.selectMontoTotalVenta(idVenta).iterator(); it.hasNext();) {
+            for (Iterator it = CRUDCompraDetalle.selectMontoTotalCompra(idCompra).iterator(); it.hasNext();) {
                 BigDecimal item = (BigDecimal) it.next();
                 setTotalFactura(item);
                 System.out.println("Monto: " + item);
@@ -245,19 +235,19 @@ public class BeanVenta {
     }
 
     public void limpiarEncabezado() {
-        setIdCliente(null);
+        setIdProveedor(null);
         setIdTipoPago(null);
     }
 
-    public void cerrarVenta() {
+    public void cerrarCompra() {
         FacesContext context = FacesContext.getCurrentInstance();
 
         try {
-            //System.out.println("id producto+" + idProducto + " cantidad=" + cantidad + " monto=" + monto);
 
-            boolean flag = CRUDs.CRUDVenta.update(idVenta);
+            boolean flag = CRUDs.CRUDCompra.update(idCompra);
+
             if (flag) {
-                reporteVenta();
+                //reporteVenta();
                 limpiarDetalle();
                 mostrarDetalle();
                 limpiarEncabezado();
@@ -266,10 +256,10 @@ public class BeanVenta {
                 setTotalFactura(null);
                 BigDecimal totalFactura = new BigDecimal(0);
                 setTotalFactura(totalFactura);
-                context.addMessage(null, new FacesMessage("Exito", "Venta finalizada"));
+                context.addMessage(null, new FacesMessage("Exito", "Compra finalizada"));
 
             } else {
-                context.addMessage(null, new FacesMessage("Error", "Venta no cerrada"));
+                context.addMessage(null, new FacesMessage("Error", "Compra no cerrada"));
 
             }
 
@@ -284,105 +274,36 @@ public class BeanVenta {
     public void tablaDetalle() {
         BigDecimal total, pr, cant2;
         Integer cant;
-        listaVentaDetalle.clear();
-        for (Iterator it = CRUDs.CRUDVentaDetalle.universo(idVenta).iterator(); it.hasNext();) {
+        listaCompraDetalle.clear();
+        for (Iterator it = CRUDs.CRUDCompraDetalle.universo(idCompra).iterator(); it.hasNext();) {
             //for (Iterator it = CRUDs.CRUDVentaDetalle.universo(idVenta).iterator(); it.hasNext();) {
             Object[] item = (Object[]) it.next();
             pr = (BigDecimal) item[3];
             cant = (Integer) item[2];
             cant2 = new BigDecimal(cant);
             total = cant2.multiply(pr);
-            getListaVentaDetalle().add(new listaVentaDetalle((Integer) item[0], (String) item[1], (Integer) item[2], (BigDecimal) item[3], total));
+            getListaCompraDetalle().add(new listaCompraDetalle((Integer) item[0], (String) item[1], (Integer) item[2], (BigDecimal) item[3], total));
 
         }
 
     }
+    
+    
 
-    //Reportes (Falta)
-    //Rerpote venta
-    //Rerpote venta
-    public void reporteVenta() throws IOException, JRException, ParseException {
-        try {
-            Integer estado = CRUDs.CRUDVentaDetalle.reporteVenta(idVenta).size();
-            //Integer estado = CRUDs.CRUDVentaDetalle.reporteVenta(idVenta).size();
-            if (estado != 0) {
-                reportefinalseminario.ReporteFinalSeminario.reporteVenta(idVenta);
-                setListaReporteVenta(factory.reporteVenta());
 
-                JRBeanCollectionDataSource ds = new JRBeanCollectionDataSource(getListaReporteVenta());
-                File jasper = new File(FacesContext.getCurrentInstance().getExternalContext().getRealPath("Reportes/reporteVenta.jasper"));
-                byte[] bytes = JasperRunManager.runReportToPdf(jasper.getPath(), null, ds);
-                HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
-                response.setContentType("application/pdf"); //Exporte de archivo en PDF
-                response.setContentLength(bytes.length);
-                ServletOutputStream outStream = response.getOutputStream();
-                outStream.write(bytes, 0, bytes.length);
-                outStream.flush();
-                outStream.close();
-                FacesContext.getCurrentInstance().responseComplete();
-
-            } else {
-                FacesContext context = FacesContext.getCurrentInstance();
-                context.addMessage(null, new FacesMessage("Error", "No existe información "));
-            }
-        } catch (JRException e) {
-            FacesContext context = FacesContext.getCurrentInstance();
-            context.addMessage(null, new FacesMessage("Error", "Error al cargar el reporte " + e));
-            System.out.println("error=" + e);
-        }
-    }
-
-    /*
-    public void reporteVenta() throws IOException, JRException, ParseException {
-        try {
-            //Integer estado = CRUDs.CRUDVentaDetalle.reporteVenta(idVenta).size();
-            Integer estado = CRUDs.CRUDVentaDetalle.reporteVenta(idVenta).size();
-            if (estado != 0) {
-
-                //reporteseminario2023.ReporteSeminario2023.reporteVenta(idVenta);
-                reportefinalseminario.ReporteFinalSeminario.reporteVenta(idVenta);
-                setListaReporteVenta(factory.reporteCompra());
-                
-                //setListaReporteVenta(factory.reporteVenta());
-                
-                
-                JRBeanCollectionDataSource ds = new JRBeanCollectionDataSource(getListaReporteVenta());
-                File jasper = new File(FacesContext.getCurrentInstance().getExternalContext().getRealPath("Reportes/reporteVenta.jasper"));
-                byte[] bytes = JasperRunManager.runReportToPdf(jasper.getPath(), null, ds);
-                HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
-                response.setContentType("application/pdf"); //Exporte de archivo en PDF
-                response.setContentLength(bytes.length);
-                ServletOutputStream outStream = response.getOutputStream();
-                outStream.write(bytes, 0, bytes.length);
-                outStream.flush();
-                outStream.close();
-                FacesContext.getCurrentInstance().responseComplete();
-
-            } else {
-                FacesContext context = FacesContext.getCurrentInstance();
-                context.addMessage(null, new FacesMessage("Error", "No existe información "));
-            }
-        } catch (JRException e) {
-            FacesContext context = FacesContext.getCurrentInstance();
-            context.addMessage(null, new FacesMessage("Error", "Error al cargar el reporte " + e));
-            System.out.println("error=" + e);
-        }
-    }
-     */
-    //Fin tabla con productos seleccionados
-    //Encapsulación
+//Setter y Getter
     /**
-     * @return the idCliente
+     * @return the idProveedor
      */
-    public Integer getIdCliente() {
-        return idCliente;
+    public Integer getIdProveedor() {
+        return idProveedor;
     }
 
     /**
-     * @param idCliente the idCliente to set
+     * @param idProveedor the idProveedor to set
      */
-    public void setIdCliente(Integer idCliente) {
-        this.idCliente = idCliente;
+    public void setIdProveedor(Integer idProveedor) {
+        this.idProveedor = idProveedor;
     }
 
     /**
@@ -400,17 +321,17 @@ public class BeanVenta {
     }
 
     /**
-     * @return the idVenta
+     * @return the idCompra
      */
-    public Integer getIdVenta() {
-        return idVenta;
+    public Integer getIdCompra() {
+        return idCompra;
     }
 
     /**
-     * @param idVenta the idVenta to set
+     * @param idCompra the idCompra to set
      */
-    public void setIdVenta(Integer idVenta) {
-        this.idVenta = idVenta;
+    public void setIdCompra(Integer idCompra) {
+        this.idCompra = idCompra;
     }
 
     /**
@@ -456,17 +377,17 @@ public class BeanVenta {
     }
 
     /**
-     * @return the ListaCliente
+     * @return the ListaProveedor
      */
-    public List getListaCliente() {
-        return ListaCliente;
+    public List getListaProveedor() {
+        return ListaProveedor;
     }
 
     /**
-     * @param ListaCliente the ListaCliente to set
+     * @param ListaProveedor the ListaProveedor to set
      */
-    public void setListaCliente(List ListaCliente) {
-        this.ListaCliente = ListaCliente;
+    public void setListaProveedor(List ListaProveedor) {
+        this.ListaProveedor = ListaProveedor;
     }
 
     /**
@@ -512,17 +433,17 @@ public class BeanVenta {
     }
 
     /**
-     * @return the listaVentaDetalle
+     * @return the listaCompraDetalle
      */
-    public ArrayList<listaVentaDetalle> getListaVentaDetalle() {
-        return listaVentaDetalle;
+    public ArrayList<listaCompraDetalle> getListaCompraDetalle() {
+        return listaCompraDetalle;
     }
 
     /**
-     * @param listaVentaDetalle the listaVentaDetalle to set
+     * @param listaCompraDetalle the listaCompraDetalle to set
      */
-    public void setListaVentaDetalle(ArrayList<listaVentaDetalle> listaVentaDetalle) {
-        this.listaVentaDetalle = listaVentaDetalle;
+    public void setListaCompraDetalle(ArrayList<listaCompraDetalle> listaCompraDetalle) {
+        this.listaCompraDetalle = listaCompraDetalle;
     }
 
     /**
@@ -554,17 +475,17 @@ public class BeanVenta {
     }
 
     /**
-     * @return the listaReporteVenta
+     * @return the listaReporteCompra
      */
-    public List getListaReporteVenta() {
-        return listaReporteVenta;
+    public List getListaReporteCompra() {
+        return listaReporteCompra;
     }
 
     /**
-     * @param listaReporteVenta the listaReporteVenta to set
+     * @param listaReporteCompra the listaReporteCompra to set
      */
-    public void setListaReporteVenta(List listaReporteVenta) {
-        this.listaReporteVenta = listaReporteVenta;
+    public void setListaReporteCompra(List listaReporteCompra) {
+        this.listaReporteCompra = listaReporteCompra;
     }
 
 }
