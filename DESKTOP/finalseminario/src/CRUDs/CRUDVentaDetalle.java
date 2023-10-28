@@ -5,6 +5,8 @@
  */
 package CRUDs;
 
+import POJOs.Compra;
+import POJOs.DetalleCompra;
 import POJOs.DetalleVenta;
 import POJOs.Producto;
 import POJOs.Venta;
@@ -23,29 +25,30 @@ import org.hibernate.criterion.Restrictions;
  * @author Samayoa
  */
 public class CRUDVentaDetalle {
-        public static boolean insert(Integer idProducto, Integer idVenta, Integer cantidad, BigDecimal monto) {
+
+    public static boolean insert(Integer idProducto, Integer idCompra, Integer cantidad, BigDecimal monto) {
         boolean flag = false;
         Date fecha = new Date();
         Session session = HibernateUtil.HibernateUtil.getSessionFactory().openSession();
-        Criteria criteria = session.createCriteria(DetalleVenta.class);
-        criteria.createAlias("venta","v");
-        criteria.createAlias("producto","p");
+        Criteria criteria = session.createCriteria(DetalleCompra.class);
+        criteria.createAlias("compra", "c");
+        criteria.createAlias("producto", "p");
         criteria.add(Restrictions.eq("p.idProducto", idProducto));
-        criteria.add(Restrictions.eq("v.idVenta", idVenta));
-        DetalleVenta insert = (DetalleVenta) criteria.uniqueResult();
+        criteria.add(Restrictions.eq("c.idCompra", idCompra));
+        DetalleCompra insert = (DetalleCompra) criteria.uniqueResult();
         Transaction transaction = null;
         try {
             transaction = session.beginTransaction();
             if (insert == null) {
-                insert = new DetalleVenta();
-                Producto producto=new Producto();
+                insert = new DetalleCompra();
+                Producto producto = new Producto();
                 producto.setIdProducto(idProducto);
                 insert.setProducto(producto);
 
-                Venta venta=new Venta();
-                venta.setIdVenta(idVenta);
-                insert.setVenta(venta);
-                
+                Compra compra = new Compra();
+                compra.setIdCompra(idCompra);
+                insert.setCompra(compra);
+
                 insert.setCantidad(cantidad);
                 insert.setMonto(monto);
                 session.save(insert);
@@ -61,6 +64,8 @@ public class CRUDVentaDetalle {
 
         return flag;
     }
+
+    
     
     public static boolean eliminar(Integer idDetalleVenta){
         boolean flag = false;
