@@ -5,8 +5,8 @@
  */
 
 function habilita(idElemento, idElemento2) {
-    document.getElementById(idElemento).style.display = 'block'; //Mostrar
-    document.getElementById(idElemento2).style.display = 'none'; //Ocultar
+    document.getElementById(idElemento).style.display = "block"; //Mostrar
+    document.getElementById(idElemento2).style.display = "none"; //Ocultar
 
     //Se afecta la propiedad display para que este muestre u oculte algo. 
 

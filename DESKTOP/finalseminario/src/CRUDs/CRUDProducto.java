@@ -7,6 +7,7 @@ package CRUDs;
 
 import POJOs.Producto;
 import POJOs.Usuario;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import org.hibernate.Criteria;
@@ -22,15 +23,12 @@ import org.hibernate.criterion.Restrictions;
  */
 public class CRUDProducto {
         
-    public static boolean insert(String nombre, int usuario) {
+    public static boolean insert(String nombre, Integer cantidad, BigDecimal precio, int usuario) {
         boolean flag = false;
         Date fecha = new Date();
         Session session = HibernateUtil.HibernateUtil.getSessionFactory().openSession();
         Criteria criteria = session.createCriteria(Producto.class);
-
         criteria.add(Restrictions.eq("nombre", nombre));
- 
-
         criteria.add(Restrictions.eq("estado", true));
         Producto insert = (Producto) criteria.uniqueResult();
         Transaction transaction = null;
@@ -40,9 +38,9 @@ public class CRUDProducto {
             if (insert == null) {
                 insert = new Producto();
                 insert.setEstado(true);
-
                 insert.setNombre(nombre);
-          
+                insert.setCantidad(cantidad);
+                insert.setPrecio(precio);
 
                 Usuario usuario2 = new Usuario();
                 usuario2.setIdUsuario(usuario);
@@ -68,39 +66,34 @@ public class CRUDProducto {
     }
 
     
-        public static boolean update(Integer idProducto, String nombre,  int usuario) {
-        boolean flag = false;
+    public static boolean update(Integer idProducto, String nombre, BigDecimal precio, Integer idUsuario){
+        boolean flag=false;
         Date fecha = new Date();
-        Session session = HibernateUtil.HibernateUtil.getSessionFactory().openSession();
-        Criteria criteria = session.createCriteria(Producto.class);
-        criteria.add(Restrictions.eq("idProducto", idProducto));
-        Producto update = (Producto) criteria.uniqueResult();
-        Transaction transaction = null;
-        try {
-            transaction = session.beginTransaction();
-            if (update != null) {
-                
+        Session session=HibernateUtil.HibernateUtil.getSessionFactory().openSession();
+        Criteria criteria=session.createCriteria(Producto.class);
+        criteria.add(Restrictions.eq("idProducto",idProducto));
+        Producto update=(Producto)criteria.uniqueResult();//ejecuta el codigo
+        Transaction transaction=null;
+        try{
+            transaction=session.beginTransaction();
+            //para ver si ya existe, y si sí, que lo modifique
+            if(update!=null){
+                //para conocer los nuevos valores[Estados,]
                 update.setNombre(nombre);
- 
-             
-
+                update.setPrecio(precio);
                 update.setFechaModifica(fecha);
-
-                Usuario usuario2 = new Usuario();
-                usuario2.setIdUsuario(usuario);
-                update.setUsuarioByUsuarioModifica(usuario2);
-
-                session.update(update);
-                flag = true;
-
+                Usuario usuario=new Usuario();
+                usuario.setIdUsuario(idUsuario);
+                update.setUsuarioByUsuarioModifica(usuario);
+                session.update(update);//Los del parantesis son los valores nuevos, y el update fuera es la accion que se esta haciendo
+                flag=true;
             }
             transaction.commit();
-
-        } catch (Exception e) {
-            System.out.println("Error = " + e);
-        } finally {
+        }catch(Exception e){
+            transaction.rollback();//en caso que la transaccion no se complete por alguna razon, se hace un rollback
+            System.out.println("Error: "+e);
+        }finally{
             session.close();
-
         }
         return flag;
     }
@@ -191,7 +184,6 @@ public class CRUDProducto {
             System.out.println("Error" + e);
         } finally {
             session.close();
-
         }
         return flag;
 

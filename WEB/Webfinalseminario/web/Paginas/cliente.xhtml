@@ -1,0 +1,149 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <script type="text/javascript" src="../archivos/script.js"></script>
+    </h:head>
+
+    <h:body onload="habilita('formCliente:guardar', 'formCliente:modificar');foco('formCliente:primerNombre');#{beanCliente.limpiar()}">
+        <!--Fromulario para ingresar datos en la BDD-->
+        <h:form id="formCliente">
+            <!-- <p:growl/> Muestra un mensaje emergente-->
+            <p:growl id="growl" life="2000" showDetail="true"/>
+            <p:panel header="Clientes">
+                <h5>Primer nombre</h5>
+                <p:inputText id="primerNombre" value="#{beanCliente.nombre1}" onkeypress="if (event.keyCode === 13) {
+                            foco('formCliente:segundoNombre');
+                            return false;
+                        }"/> <!-- 13= al codico ASSI del enter-->
+                
+                <h5>Segundo nombre</h5>
+                <p:inputText id="segundoNombre" value="#{beanCliente.nombre2}" onkeypress="if (event.keyCode === 13) {
+                            foco('formCliente:primerApellido');
+                            return false;
+                        }"/> <!-- 13= al codico ASSI del enter-->
+
+                <h5>Primer apellido</h5>
+                <p:inputText id="primerApellido" value="#{beanCliente.apellido1}" onkeypress="if (event.keyCode === 13) {
+                            foco('formCliente:segundoApellido');
+                            return false;
+                        }"/> <!-- 13= al codico ASSI del enter-->
+
+                <h5>Segundo apellido</h5>
+                <p:inputText id="segundoApellido" value="#{beanCliente.apellido2}" onkeypress="if (event.keyCode === 13) {
+                            foco('formCliente:nit');
+                            return false;
+                        }"/> <!-- 13= al codico ASSI del enter-->
+
+                <h5>NIT</h5>
+                <p:inputText id="nit" value="#{beanCliente.nit}" onkeypress="if (event.keyCode === 13) {
+                            foco('formCliente:direccion');
+                            return false;
+                        }"/> <!-- 13= al codico ASSI del enter-->
+
+                <h5>Dirección</h5>
+                <p:inputText id="direccion" value="#{beanCliente.direccion}" onkeypress="if (event.keyCode === 13) {
+                            foco('formCliente:telefono');
+                            return false;
+                        }"/> <!-- 13= al codico ASSI del enter-->
+
+                <h5>Telefono</h5>
+                <p:inputText id="telefono" value="#{beanCliente.telefono}" onkeypress="if (event.keyCode === 13) {
+                            focoBoton('formCliente:guardar', 'formCliente:modificar');
+                            return false;
+                                    }"/> <!-- 13= al codico ASSI del enter-->
+
+                <!--Botones guardar y modificar en el formulario de ingreso-->
+                <p:commandButton id="guardar" value="Guardar" update="@form,tables" styleClass="rounded-button" action ="#{beanCliente.insertar2()}" oncomplete="habilita('formCliente:guardar','formCliente:modificar');foco('formCliente:primerNombre')"/>
+                <p:commandButton id="modificar" value="Modificar" update="@form,tables" styleClass="rounded-button ui-button-success" action ="#{beanCliente.modificar()}" oncomplete="habilita('formCliente:guardar','formCliente:modificar');foco('formCliente:primerNombre')"/>
+                <!--update="@form,tables" actualizar datos de las tablas-->
+            </p:panel>
+
+        </h:form>
+
+        <!--Tabla que nos muestra lo que esta ingresado en la BDD-->
+        <h:form id="tables">
+            <div class="card">
+                <p:dataTable var="client" value="#{beanCliente.listaClientes}" rowsPerPageTemplate="5,10,15" paginator="true" rows="10">
+
+                    <p:column headerText="Primer Nombre" sortBy="#{client.nombre1}" filterBy="#{client.nombre1}">
+                        <h:outputText value="#{client.nombre1}" /> 
+                    </p:column>
+
+                    <p:column headerText="Segundo Nombre" sortBy="#{client.nombre2}" filterBy="#{client.nombre2}">
+                        <h:outputText value="#{client.nombre2}" />
+                    </p:column>
+
+                    <p:column headerText="Primero Apellido" sortBy="#{client.apellido1}" filterBy="#{client.apellido1}">
+                        <h:outputText value="#{client.apellido1}" />
+                    </p:column>
+
+                    <p:column headerText="Segundo Apellido" sortBy="#{client.apellido2}" filterBy="#{client.apellido2}">
+                        <h:outputText value="#{client.apellido2}" />
+                    </p:column>
+
+                    <p:column headerText="NIT" sortBy="#{client.nit}" filterBy="#{client.nit}">
+                        <h:outputText value="#{client.nit}" />
+                    </p:column>
+
+                    <p:column headerText="Dirección" sortBy="#{client.direccion}" filterBy="#{client.direccion}">
+                        <h:outputText value="#{client.direccion}" />
+                    </p:column>
+
+                    <p:column headerText="Teléfono" sortBy="#{client.telefono}" filterBy="#{client.telefono}">
+                        <h:outputText value="#{client.telefono}" />
+                    </p:column>
+
+                    <!--Botones de moficar y anular dentro de la tabla-->
+                    <p:column headerText="Modificar">
+                        <p:commandButton value="Modificar" update="formCliente" styleClass="rounded-button ui-button-success" action ="#{beanCliente.selecionarDatos(client)}" oncomplete="habilita('formCliente:modificar','formCliente:guardar'),foco('formCliente:primerNombre')"/>
+                    </p:column>
+                    <p:column headerText="Anular">
+                        <p:commandButton value="Anular" update="anular" styleClass="rounded-button ui-button-danger" action ="#{beanCliente.selecionarDatos(client)}" onclick="PF('dlg2').show()"/>
+                    </p:column>
+                </p:dataTable>
+            </div>
+        </h:form>
+
+        <!--Ventana que se despliega al usar el boton de anular-->
+        <p:dialog header="Anular Cliente" widgetVar="dlg2" minHeight="40" width="350" showEffect="fade" modal="true">
+            <h:form id="anular">
+                <p class="m-0">
+                    ¿Desea anular el siguiente cliente?
+                </p>
+
+                <!--Muestra la informacion de la opcion que queremos manipular-->
+                <h:outputText value="Primer Nombre: #{beanCliente.nombre1}"/>
+                <br></br>
+                <br></br>
+                <h:outputText value="Segundo Nombre: #{beanCliente.nombre2}"/>        
+                <br></br>
+                <br></br>
+                <h:outputText value="Primer Apellido: #{beanCliente.apellido1}"/>
+                <br></br>
+                <br></br>
+                <h:outputText value="Segundo Apellido: #{beanCliente.apellido2}"/>        
+                <br></br>
+                <br></br>
+                <h:outputText value="NIT: #{beanCliente.nit}"/>
+                <br></br>
+                <br></br>
+                <h:outputText value="Dirección: #{beanCliente.direccion}"/>        
+                <br></br>
+                <br></br>        
+                <h:outputText value="Dirección: #{beanCliente.telefono}"/>        
+                <br></br>
+                <br></br> 
+
+                <!--Botones para confirmar o desconfirmar la anulacion-->
+                <p:commandButton value="Confirmar" update="@form,tables" styleClass="rounded-button ui-button-danger" onclick="PF('dlg2').close()" action ="#{beanCliente.anular()}"/>
+                <p:commandButton value="Cancelar" update="@form,tables" styleClass="rounded-button ui-button-danger" onclick="PF('dlg2').close()" action ="#{beanCliente.limpiar()}"/>
+            </h:form>
+        </p:dialog>
+
+    </h:body>
+</html>

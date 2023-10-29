@@ -1,0 +1,92 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <script type="text/javascript" src="../Archivos/script.js"></script>
+    </h:head>
+
+    <h:body onload="habilita('formProducto:guardar', 'formProducto:modificar');foco('formProducto:nombre');#{beanProducto.limpiar()}">
+        <!-- Fromulario para ingresar datos en la BDD-->
+        <h:form id="formProducto">
+            <!-- <p:growl/> Muestra un mensaje emergente-->
+            <p:growl id="growl" life="2000" showDetail="true"/>
+            <p:panel header="Productos">
+                <h5>Nombre de Producto</h5>
+                <p:inputText id="nombre" value="#{beanProducto.nombre}" onkeypress="if (event.keyCode === 13) {
+                            foco('formProducto:cantidad');
+                            return false;
+                        }"/> <!-- 13= al codico ASSI del enter-->
+                <h5>Cantidad</h5>
+                <p:inputText id="cantidad" value="#{beanProducto.cantidad}" onkeypress="if (event.keyCode === 13) {
+                            foco('formProducto:precio');
+                            return false;
+                        }"/>
+                <h5>Precio</h5>
+                <p:inputText id="precio" value="#{beanProducto.precio}" onkeypress="if (event.keyCode === 13) {
+                            focoBoton('formProducto:guardar', 'formProducto:modificar');
+                            return false;
+                                    }"/>
+                        <br></br>
+                        <br></br>
+                <p:commandButton id="guardar" value="Guardar" update="@form,tables" styleClass="rounded-button" action ="#{beanProducto.insertar2()}" oncomplete="habilita('formProducto:guardar','formProducto:modificar');foco('formProducto:nombreProducto')"/>
+                <p:commandButton id="modificar" value="Modificar" update="@form,tables" styleClass="rounded-button ui-button-success" action ="#{beanProducto.modificar()}" oncomplete="habilita('formProducto:modificar,'formProducto:guardar');foco('formProducto:nombreProducto')"/>
+                <!--update="@form,tables" actualizar datos de las tablas-->
+            </p:panel>
+        </h:form>
+
+        <!-- Tabla que nos muestra lo que esta ingresado en la BDD-->
+        <h:form id="tables">
+            <div class="card">
+                <p:dataTable var="product" value="#{beanProducto.listaProducto}" rowsPerPageTemplate="5,10,15" paginator="true" rows="10">
+
+                    <p:column headerText="Producto" sortBy="#{product.nombre}" filterBy="#{product.nombre}">
+                        <h:outputText value="#{product.nombre}" /> 
+                    </p:column>
+                    <p:column headerText="Cantidad" sortBy="#{product.cantidad}" filterBy="#{product.cantidad}">
+                        <h:outputText value="#{product.cantidad}" />
+                    </p:column>
+                    <p:column headerText="Precio" sortBy="#{product.precio}" filterBy="#{product.precio}">
+                        <h:outputText value="#{product.precio}" />
+                    </p:column>
+
+                    <!-- Botones de moficar y anular-->
+                    <p:column headerText="Modificar">
+                        <p:commandButton value="Modificar" update="formProducto" styleClass="rounded-button ui-button-success" action ="#{beanProducto.selecionarDatos(product)}" oncomplete="habilita('formProducto:modificar','formProducto:guardar'),foco('formProducto:nombre')"/>
+                    </p:column>
+                    <p:column headerText="Anular">
+                        <p:commandButton value="Anular" update="anular" styleClass="rounded-button ui-button-danger" action ="#{beanProducto.selecionarDatos(product)}" onclick="PF('dlg2').show()"/>
+                    </p:column>
+                </p:dataTable>
+            </div>
+        </h:form>
+
+        <!--  Ventana que se despliega al usar el boton de anular-->
+        <p:dialog header="Anular Producto" widgetVar="dlg2" minHeight="40" width="350" showEffect="fade" modal="true">
+            <h:form id="anular">
+                <p class="m-0">
+                    ¿Desea anular el siguiente reguistro?
+                </p>
+
+                <!-- Muestra la informacion de la opcion que queremos manipular-->
+                <h:outputText value="Nombre: #{beanProducto.nombre}"/>
+                <br></br>
+                <br></br>
+                <h:outputText value="Cantidad: #{beanProducto.cantidad}"/>
+                <br></br>
+                <br></br>
+                <h:outputText value="Precio: #{beanProducto.precio}"/>
+                <br></br>
+                <br></br>
+
+                <!-- Botones para confirmar o desconfirmar la anulacion-->
+                <p:commandButton value="Confirmar" update="@form,tables" styleClass="rounded-button ui-button-danger" onclick="PF('dlg2').close()" action ="#{beanProducto.anular()}"/>
+                <p:commandButton value="Cancelar" update="@form,tables" styleClass="rounded-button ui-button-danger" onclick="PF('dlg2').close()" action ="#{beanProducto.limpiar()}"/>
+            </h:form>
+        </p:dialog>
+
+    </h:body>
+</html>
