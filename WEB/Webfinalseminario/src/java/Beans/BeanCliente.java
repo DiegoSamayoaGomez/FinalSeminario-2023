@@ -48,7 +48,7 @@ public class BeanCliente {
     public void insertar2(){
         FacesContext context=FacesContext.getCurrentInstance();
         try{
-            boolean flag=CRUDs.CRUDCliente.insert(nombre, nombre, direccion, nit, telefono, 1);
+            boolean flag=CRUDs.CRUDCliente.insert(nombre, apellido, direccion, nit, telefono, 1);
             if(flag){
                 mostrar();
                 limpiar();

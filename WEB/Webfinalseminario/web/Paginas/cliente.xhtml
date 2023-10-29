@@ -6,35 +6,23 @@
       xmlns:p="http://primefaces.org/ui">
 
     <h:head>
-        <script type="text/javascript" src="../archivos/script.js"></script>
+        <script type="text/javascript" src="../Archivos/script.js"></script>
     </h:head>
 
-    <h:body onload="habilita('formCliente:guardar', 'formCliente:modificar');foco('formCliente:primerNombre');#{beanCliente.limpiar()}">
+    <h:body onload="habilita('formCliente:guardar', 'formCliente:modificar');foco('formCliente:nombre');#{beanCliente.limpiar()}">
         <!--Fromulario para ingresar datos en la BDD-->
         <h:form id="formCliente">
             <!-- <p:growl/> Muestra un mensaje emergente-->
             <p:growl id="growl" life="2000" showDetail="true"/>
             <p:panel header="Clientes">
-                <h5>Primer nombre</h5>
-                <p:inputText id="primerNombre" value="#{beanCliente.nombre1}" onkeypress="if (event.keyCode === 13) {
-                            foco('formCliente:segundoNombre');
+                <h5>Nombres</h5>
+                <p:inputText id="nombre" value="#{beanCliente.nombre}" onkeypress="if (event.keyCode === 13) {
+                            foco('formCliente:apellidos');
                             return false;
                         }"/> <!-- 13= al codico ASSI del enter-->
                 
-                <h5>Segundo nombre</h5>
-                <p:inputText id="segundoNombre" value="#{beanCliente.nombre2}" onkeypress="if (event.keyCode === 13) {
-                            foco('formCliente:primerApellido');
-                            return false;
-                        }"/> <!-- 13= al codico ASSI del enter-->
-
-                <h5>Primer apellido</h5>
-                <p:inputText id="primerApellido" value="#{beanCliente.apellido1}" onkeypress="if (event.keyCode === 13) {
-                            foco('formCliente:segundoApellido');
-                            return false;
-                        }"/> <!-- 13= al codico ASSI del enter-->
-
-                <h5>Segundo apellido</h5>
-                <p:inputText id="segundoApellido" value="#{beanCliente.apellido2}" onkeypress="if (event.keyCode === 13) {
+                <h5>Apellidos</h5>
+                <p:inputText id="primerApellido" value="#{beanCliente.apellido}" onkeypress="if (event.keyCode === 13) {
                             foco('formCliente:nit');
                             return false;
                         }"/> <!-- 13= al codico ASSI del enter-->
@@ -58,8 +46,8 @@
                                     }"/> <!-- 13= al codico ASSI del enter-->
 
                 <!--Botones guardar y modificar en el formulario de ingreso-->
-                <p:commandButton id="guardar" value="Guardar" update="@form,tables" styleClass="rounded-button" action ="#{beanCliente.insertar2()}" oncomplete="habilita('formCliente:guardar','formCliente:modificar');foco('formCliente:primerNombre')"/>
-                <p:commandButton id="modificar" value="Modificar" update="@form,tables" styleClass="rounded-button ui-button-success" action ="#{beanCliente.modificar()}" oncomplete="habilita('formCliente:guardar','formCliente:modificar');foco('formCliente:primerNombre')"/>
+                <p:commandButton id="guardar" value="Guardar" update="@form,tables" styleClass="rounded-button" action ="#{beanCliente.insertar2()}" oncomplete="habilita('formCliente:guardar','formCliente:modificar');foco('formCliente:nombre')"/>
+                <p:commandButton id="modificar" value="Modificar" update="@form,tables" styleClass="rounded-button ui-button-success" action ="#{beanCliente.modificar()}" oncomplete="habilita('formCliente:guardar','formCliente:modificar');foco('formCliente:nombre')"/>
                 <!--update="@form,tables" actualizar datos de las tablas-->
             </p:panel>
 
@@ -70,20 +58,12 @@
             <div class="card">
                 <p:dataTable var="client" value="#{beanCliente.listaClientes}" rowsPerPageTemplate="5,10,15" paginator="true" rows="10">
 
-                    <p:column headerText="Primer Nombre" sortBy="#{client.nombre1}" filterBy="#{client.nombre1}">
-                        <h:outputText value="#{client.nombre1}" /> 
+                    <p:column headerText="Primer Nombre" sortBy="#{client.nombre}" filterBy="#{client.nombre}">
+                        <h:outputText value="#{client.nombre}" /> 
                     </p:column>
 
-                    <p:column headerText="Segundo Nombre" sortBy="#{client.nombre2}" filterBy="#{client.nombre2}">
-                        <h:outputText value="#{client.nombre2}" />
-                    </p:column>
-
-                    <p:column headerText="Primero Apellido" sortBy="#{client.apellido1}" filterBy="#{client.apellido1}">
-                        <h:outputText value="#{client.apellido1}" />
-                    </p:column>
-
-                    <p:column headerText="Segundo Apellido" sortBy="#{client.apellido2}" filterBy="#{client.apellido2}">
-                        <h:outputText value="#{client.apellido2}" />
+                    <p:column headerText="Primero Apellido" sortBy="#{client.apellido}" filterBy="#{client.apellido}">
+                        <h:outputText value="#{client.apellido}" />
                     </p:column>
 
                     <p:column headerText="NIT" sortBy="#{client.nit}" filterBy="#{client.nit}">
@@ -100,7 +80,7 @@
 
                     <!--Botones de moficar y anular dentro de la tabla-->
                     <p:column headerText="Modificar">
-                        <p:commandButton value="Modificar" update="formCliente" styleClass="rounded-button ui-button-success" action ="#{beanCliente.selecionarDatos(client)}" oncomplete="habilita('formCliente:modificar','formCliente:guardar'),foco('formCliente:primerNombre')"/>
+                        <p:commandButton value="Modificar" update="formCliente" styleClass="rounded-button ui-button-success" action ="#{beanCliente.selecionarDatos(client)}" oncomplete="habilita('formCliente:modificar','formCliente:guardar'),foco('formCliente:nombre')"/>
                     </p:column>
                     <p:column headerText="Anular">
                         <p:commandButton value="Anular" update="anular" styleClass="rounded-button ui-button-danger" action ="#{beanCliente.selecionarDatos(client)}" onclick="PF('dlg2').show()"/>
@@ -117,16 +97,10 @@
                 </p>
 
                 <!--Muestra la informacion de la opcion que queremos manipular-->
-                <h:outputText value="Primer Nombre: #{beanCliente.nombre1}"/>
+                <h:outputText value="Primer Nombre: #{beanCliente.nombre}"/>
                 <br></br>
                 <br></br>
-                <h:outputText value="Segundo Nombre: #{beanCliente.nombre2}"/>        
-                <br></br>
-                <br></br>
-                <h:outputText value="Primer Apellido: #{beanCliente.apellido1}"/>
-                <br></br>
-                <br></br>
-                <h:outputText value="Segundo Apellido: #{beanCliente.apellido2}"/>        
+                <h:outputText value="Primer Apellido: #{beanCliente.apellido}"/>
                 <br></br>
                 <br></br>
                 <h:outputText value="NIT: #{beanCliente.nit}"/>
