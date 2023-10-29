@@ -22,6 +22,9 @@ import javax.faces.model.SelectItem;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperRunManager;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import reportefinalseminario.factory;
 
 /**
  *
@@ -247,7 +250,7 @@ public class BeanCompra {
             boolean flag = CRUDs.CRUDCompra.update(idCompra);
 
             if (flag) {
-                //reporteVenta();
+                reporteCompra();
                 limpiarDetalle();
                 mostrarDetalle();
                 limpiarEncabezado();
@@ -287,9 +290,40 @@ public class BeanCompra {
         }
 
     }
-    
-    
 
+//Reportes
+    public void reporteCompra() throws IOException, JRException, ParseException {
+        try {
+            //Integer estado = CRUDs.CRUDVentaDetalle.reporteVenta(idVenta).size();
+            Integer estado = CRUDs.CRUDCompraDetalle.reporteCompra(idCompra).size();
+            if (estado != 0) {
+                reportefinalseminario.ReporteFinalSeminario.reporteCompra(idCompra);
+
+//    reportefinalseminario.ReporteFinalSeminario.reporteVenta(idVenta);
+//                setListaReporteVenta(factory.reporteVenta());
+                setListaReporteCompra(factory.reporteCompra());
+                JRBeanCollectionDataSource ds = new JRBeanCollectionDataSource(getListaReporteCompra());
+                File jasper = new File(FacesContext.getCurrentInstance().getExternalContext().getRealPath("Reportes/reporteCompra.jasper"));
+                byte[] bytes = JasperRunManager.runReportToPdf(jasper.getPath(), null, ds);
+                HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+                response.setContentType("application/pdf"); //Exporte de archivo en PDF
+                response.setContentLength(bytes.length);
+                ServletOutputStream outStream = response.getOutputStream();
+                outStream.write(bytes, 0, bytes.length);
+                outStream.flush();
+                outStream.close();
+                FacesContext.getCurrentInstance().responseComplete();
+
+            } else {
+                FacesContext context = FacesContext.getCurrentInstance();
+                context.addMessage(null, new FacesMessage("Error", "No existe información "));
+            }
+        } catch (JRException e) {
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage(null, new FacesMessage("Error", "Error al cargar el reporte " + e));
+            System.out.println("error=" + e);
+        }
+    }
 
 //Setter y Getter
     /**

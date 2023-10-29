@@ -17,7 +17,7 @@ public class ReporteCompra {
     private Integer noFactura;
     private String nombreProveedor;
     private Date fecha;
-    private String tipoPago;
+    private String formaPago;
     private String producto;
     private Integer cantidad;
     private BigDecimal precio;
@@ -28,7 +28,7 @@ public class ReporteCompra {
         this.noFactura = noFactura;
         this.nombreProveedor = nombreProveedor;
         this.fecha = fecha;
-        this.tipoPago = tipoPago;
+        this.formaPago = tipoPago;
         this.producto = producto;
         this.cantidad = cantidad;
         this.precio = precio;
@@ -81,15 +81,15 @@ public class ReporteCompra {
     /**
      * @return the tipoPago
      */
-    public String getTipoPago() {
-        return tipoPago;
+    public String getFormaPago() {
+        return formaPago;
     }
 
     /**
-     * @param tipoPago the tipoPago to set
+     * @param formaPago the tipoPago to set
      */
-    public void setTipoPago(String tipoPago) {
-        this.tipoPago = tipoPago;
+    public void setFormaPago(String formaPago) {
+        this.formaPago = formaPago;
     }
 
     /**

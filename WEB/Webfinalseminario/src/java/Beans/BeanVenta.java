@@ -332,43 +332,6 @@ public class BeanVenta {
         }
     }
 
-    /*
-    public void reporteVenta() throws IOException, JRException, ParseException {
-        try {
-            //Integer estado = CRUDs.CRUDVentaDetalle.reporteVenta(idVenta).size();
-            Integer estado = CRUDs.CRUDVentaDetalle.reporteVenta(idVenta).size();
-            if (estado != 0) {
-
-                //reporteseminario2023.ReporteSeminario2023.reporteVenta(idVenta);
-                reportefinalseminario.ReporteFinalSeminario.reporteVenta(idVenta);
-                setListaReporteVenta(factory.reporteCompra());
-                
-                //setListaReporteVenta(factory.reporteVenta());
-                
-                
-                JRBeanCollectionDataSource ds = new JRBeanCollectionDataSource(getListaReporteVenta());
-                File jasper = new File(FacesContext.getCurrentInstance().getExternalContext().getRealPath("Reportes/reporteVenta.jasper"));
-                byte[] bytes = JasperRunManager.runReportToPdf(jasper.getPath(), null, ds);
-                HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
-                response.setContentType("application/pdf"); //Exporte de archivo en PDF
-                response.setContentLength(bytes.length);
-                ServletOutputStream outStream = response.getOutputStream();
-                outStream.write(bytes, 0, bytes.length);
-                outStream.flush();
-                outStream.close();
-                FacesContext.getCurrentInstance().responseComplete();
-
-            } else {
-                FacesContext context = FacesContext.getCurrentInstance();
-                context.addMessage(null, new FacesMessage("Error", "No existe información "));
-            }
-        } catch (JRException e) {
-            FacesContext context = FacesContext.getCurrentInstance();
-            context.addMessage(null, new FacesMessage("Error", "Error al cargar el reporte " + e));
-            System.out.println("error=" + e);
-        }
-    }
-     */
     //Fin tabla con productos seleccionados
     //Encapsulación
     /**

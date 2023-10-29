@@ -180,7 +180,7 @@ public class CRUDCompraDetalle {
             );
 
             criteria.add(Restrictions.eq("v.idCompra", idCompra));
-            criteria.addOrder(Order.desc("idCompraDetalle"));
+            criteria.addOrder(Order.desc("idDetalleCompra"));
             criteria.setMaxResults(500); // se limita la cantidad de datos a mostrar
             lista = criteria.list();
 
