@@ -15,6 +15,7 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 
 /**
@@ -187,6 +188,44 @@ public class CRUDProducto {
         }
         return flag;
 
+    }
+    
+    
+    public static List<Producto> reporteProducto() {
+        Session session = HibernateUtil.HibernateUtil.getSessionFactory().getCurrentSession();
+        List<Producto> lista = null;
+        try {
+            session.beginTransaction();
+            Criteria criteria = session.createCriteria(Producto.class);
+
+            //Cargar los datos de otra clase
+            //criteria.createAlias("compra", "v");
+            criteria.createAlias("producto", "p");
+            //criteria.createAlias("p.proveedor", "c");
+            //criteria.createAlias("v.tipoPago", "f");
+            criteria.createAlias("p.usuarioByUsuarioIngresa", "u");
+
+            criteria.setProjection(Projections.projectionList()
+                    
+                    //.add(Projections.property("p.idProducto"))
+                    .add(Projections.property("p.fechaIngresa"))                    
+                    .add(Projections.property("p.nombre"))
+                    .add(Projections.property("p.cantidad"))
+                    //.add(Projections.property("p.precio"))
+                    .add(Projections.property("u.nombre"))
+            );
+
+            //criteria.add(Restrictions.eq("p.idProducto", idProducto));
+            //criteria.addOrder(Order.desc("idProducto"));
+            criteria.setMaxResults(500); // se limita la cantidad de datos a mostrar
+            lista = criteria.list();
+
+        } catch (HibernateException e) {
+            System.out.println("Error" + e);
+        } finally {
+            session.getTransaction().commit(); //La sesion se cierra de forma distinta al update e insert
+        }
+        return lista;
     }
     
 }

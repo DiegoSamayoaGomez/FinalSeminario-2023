@@ -5,7 +5,9 @@
  */
 package reportefinalseminario;
 
+import static CRUDs.CRUDProducto.reporteProducto;
 import Reportes.ReporteCompra;
+import Reportes.ReporteProducto;
 import Reportes.ReporteVenta;
 import java.math.BigDecimal;
 import java.text.ParseException;
@@ -89,6 +91,32 @@ public class ReporteFinalSeminario {
 
             factory comp = new factory();
             comp.setReporteCompra((ArrayList<ReporteCompra>) list);
+
+        }
+        return list;
+    }
+
+    public static List Producto() throws ParseException {
+        Integer cantidad;
+        String usuario, producto;
+        Date fechaVenta;
+        BigDecimal precio;
+        BigDecimal cant, prec;
+//        prec = new BigDecimal(precio);
+
+        List<Reportes.ReporteProducto> list = new ArrayList<Reportes.ReporteProducto>();
+        for (Iterator it = CRUDs.CRUDProducto.reporteProducto().iterator(); it.hasNext();) {
+            //for (Iterator it = CRUDs.CRUDVentaDetalle.reporteVenta(idVenta).iterator();   it.hasNext();) {
+            Object[] item = (Object[]) it.next();
+            fechaVenta = (Date) item[1];
+            producto = (String) item[2];
+            cantidad = (Integer) item[3];            
+            usuario = (String) item[4];
+
+            list.add(new ReporteProducto(fechaVenta, producto, cantidad, usuario));
+
+            factory comp = new factory();
+            comp.setReporteProducto((ArrayList<ReporteProducto>) list);
 
         }
         return list;

@@ -6,6 +6,7 @@
 package reportefinalseminario;
 
 import Reportes.ReporteCompra;
+import Reportes.ReporteProducto;
 import Reportes.ReporteVenta;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +19,7 @@ public class factory {
 
     private static ArrayList<ReporteVenta> reporteVenta = new ArrayList<ReporteVenta>();
     private static ArrayList<ReporteCompra> reporteCompra = new ArrayList<ReporteCompra>();
+    private static ArrayList<ReporteProducto> reporteProducto = new ArrayList<ReporteProducto>();
 
     public static List reporteVenta() {
         return getReporteVenta();
@@ -25,6 +27,10 @@ public class factory {
 
     public static List reporteCompra() {
         return getReporteCompra();
+    }
+
+    public static List reporteProducto() {
+        return getReporteProducto();
     }
 
     /**
@@ -53,6 +59,20 @@ public class factory {
      */
     public static void setReporteCompra(ArrayList<ReporteCompra> aReporteCompra) {
         reporteCompra = aReporteCompra;
+    }
+
+    /**
+     * @return the reporteProducto
+     */
+    public static ArrayList<ReporteProducto> getReporteProducto() {
+        return reporteProducto;
+    }
+
+    /**
+     * @param aReporteProducto the reporteProducto to set
+     */
+    public static void setReporteProducto(ArrayList<ReporteProducto> aReporteProducto) {
+        reporteProducto = aReporteProducto;
     }
 
 }
