@@ -18,6 +18,28 @@ import org.hibernate.criterion.Restrictions;
  * @author Pit
  */
 public class CRUDUsuario {
+    
+    
+    public static Usuario select(String nombreUsuario){
+        Session session=HibernateUtil.HibernateUtil.getSessionFactory().openSession();
+        Usuario select=null;
+        try{
+            Criteria criteria=session.createCriteria(Usuario.class);
+            criteria.add(Restrictions.eq("nombre", nombreUsuario));
+            criteria.add(Restrictions.eq("estado", true));
+            select=(Usuario)criteria.uniqueResult();
+        }catch(HibernateException e){
+            System.out.println("Error = "+ e);
+        }finally{
+            session.close();
+        }
+        return select;
+    }
+    
+    
+    
+    
+    
     public static List<Usuario> universo(){
         Session session = HibernateUtil.HibernateUtil.getSessionFactory().getCurrentSession();
         List<Usuario>lista=null;

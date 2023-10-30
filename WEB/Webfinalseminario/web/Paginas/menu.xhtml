@@ -29,8 +29,9 @@ and open the template in the editor.
                 <img src="http://www.clipartbest.com/cliparts/xTg/Lbz/xTgLbzAXc.png" width="30" height="30" class="d-inline-block align-top" alt="icono"/>
                 Inicio
             </a>
-
-            <a href="/Webfinalseminario" class="btn btn-danger">Salir</a>
+            <h:form>
+                <p:commandButton value="Salir" class="btn btn-danger" actionListener="#{login.cancelarLogin()}" />
+            </h:form>
         </nav>
 
         <div class="jumbotron jumbotron-fluid">
