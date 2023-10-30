@@ -30,7 +30,6 @@ public class BeanCliente {
 
     @PostConstruct
     public void mostrar(){
-        
         setListaClientes(CRUDs.CRUDCliente.universo());
     }
     
@@ -41,60 +40,74 @@ public class BeanCliente {
     public void limpiar(){
         setNombre("");
         setApellido("");
-        setDireccion("");
         setNit("");
         setTelefono("");
+        setDireccion("");        
     }
     
     public void insertar2(){
         FacesContext context=FacesContext.getCurrentInstance();
         try{
-            boolean flag=CRUDs.CRUDCliente.insert(nombre, apellido, direccion, nit, telefono, 1);
-            if(flag){
+            boolean flag=CRUDs.CRUDCliente.insert(nombre, apellido, nit, telefono, direccion, 1);
+            if (flag) {
+                context.addMessage(null, new FacesMessage("Exito", "Registro Ingresado"));
                 mostrar();
                 limpiar();
-                context.addMessage(null, new FacesMessage("Exito","Cliente ingresado"));
-            }else{
-                context.addMessage(null, new FacesMessage("Error","Revise que no haya sido ingresado antes"));
+            } else {
+                context.addMessage(null, new FacesMessage("Error", "Registro fallido"));
+
             }
-        }catch(Exception e){
-            context.addMessage(null, new FacesMessage("Error","Error"+e));
-            System.out.println("error ="+e);
+        } catch (Exception e) {
+            context.addMessage(null, new FacesMessage("Error", "Error"));
+            System.out.println("Error = " + e);
+
         }
     }
     
-    public void modificar(){
-        FacesContext context=FacesContext.getCurrentInstance();
-        try{
-            boolean flag=CRUDs.CRUDCliente.update(getIdCliente(),getNombre(),getApellido(), getNit(), getDireccion(), getTelefono(),1);
-            if(flag){
+        public void modificar() {
+        FacesContext context = FacesContext.getCurrentInstance();
+
+        try {
+
+            boolean flag = CRUDs.CRUDCliente.update(idCliente, nombre, apellido, nit, direccion, telefono, 1);
+            if (flag) {
                 mostrar();
+                context.addMessage(null, new FacesMessage("Exito", "Registro modificado"));
                 limpiar();
-                context.addMessage(null, new FacesMessage("Exito","Reguistro modificado"));
-            }else{
-                context.addMessage(null, new FacesMessage("Error","Revise que no los datos ingresados sean correctos"));
+            } else {
+                context.addMessage(null, new FacesMessage("Error", "Registro fallido"));
+
             }
-        }catch(Exception e){
-            context.addMessage(null, new FacesMessage("Error","Error"+e));
-            System.out.println("error ="+e);
+
+        } catch (Exception e) {
+            context.addMessage(null, new FacesMessage("Error", "Error"));
+            System.out.println("Error = " + e);
+
         }
+
     }
     
-    public void anular(){
-        FacesContext context=FacesContext.getCurrentInstance();
-        try{
-            boolean flag=CRUDs.CRUDCliente.anular(getIdCliente(),1);
-            if(flag){
+    public void anular() {
+        FacesContext context = FacesContext.getCurrentInstance();
+
+        try {
+
+            boolean flag = CRUDs.CRUDCliente.anular(idCliente, 1);
+            if (flag) {
                 mostrar();
-                limpiar(); 
-                context.addMessage(null, new FacesMessage("Exito","Reguistro anulado"));
-            }else{
-                context.addMessage(null, new FacesMessage("Error","Revise que no los datos ingresados sean correctos"));
+                context.addMessage(null, new FacesMessage("Exito", "Registro anulado"));
+                limpiar();
+            } else {
+                context.addMessage(null, new FacesMessage("Error", "Anulación fallida"));
+
             }
-        }catch(Exception e){
-            context.addMessage(null, new FacesMessage("Error","Error"+e));
-            System.out.println("error ="+e);
+
+        } catch (Exception e) {
+            context.addMessage(null, new FacesMessage("Error", "Error"));
+            System.out.println("Error = " + e);
+
         }
+
     }
     
 //    Se extrae lo de la tabla y llena la informacion de cada insert en la tabla
@@ -102,9 +115,9 @@ public class BeanCliente {
         setIdCliente(cliente.getIdCliente());
         setNombre(cliente.getNombre());
         setApellido(cliente.getApellido());
-        setDireccion(cliente.getDireccion());
         setNit(cliente.getNit());
         setTelefono(cliente.getTelefono());
+        setDireccion(cliente.getDireccion());
     }
 
     /**
