@@ -1,19 +1,18 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
-    <head>
-        <title>Proveedor</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"/>
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
 
-    </head>
-    <body>
-          <nav class="navbar navbar-light bg-warning">
+    <h:head>
+        <script type="text/javascript" src="../archivos/script.js"></script>
+        <title>Proveedores</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"/>
+    </h:head>
+
+    <h:body onload="habilita('formProveedor:guardar', 'formProveedor:modificar');foco('formProveedor:nombre');#{beanProveedor.limpiar()}">
+        <nav class="navbar navbar-light bg-warning">
             <a class="navbar-brand" href="#">
                 <img src="https://cdn1.iconfinder.com/data/icons/kitchen-and-food-2/44/toaster-512.png" width="30" height="30" class="d-inline-block align-top" alt="icono"/>
                 Proveedor
@@ -22,5 +21,95 @@ and open the template in the editor.
             <a href="/Webfinalseminario/Paginas/menu.xhtml" class="btn btn-dark">Volver</a>
         </nav>
 
-    </body>
+        <!--Fromulario para ingresar datos en la BDD-->
+        <h:form id="formProveedor">
+            <!-- <p:growl/> Muestra un mensaje emergente-->
+            <p:growl id="growl" life="2000" showDetail="true"/>
+            <p:panel header="Clientes">
+
+                <h5>Nombres</h5>
+                <p:inputText id="nombre" value="#{beanProveedor.nombre}" onkeypress="if (event.keyCode === 13) {
+                foco('formProveedor:direccion');
+                return false;
+            }"/> <!-- 13= al codico ASSI del enter-->
+                <br></br>
+                <br></br>
+                <h5>Dirección</h5>
+                <p:inputText id="direccion" value="#{beanProveedor.direccion}" onkeypress="if (event.keyCode === 13) {
+                            foco('formProveedor:telefono');
+                            return false;
+                        }"/> <!-- 13= al codico ASSI del enter-->           
+                <br></br>
+                <br></br>
+                <h5>Telefono</h5>
+                <p:inputText id="telefono" value="#{beanProveedor.telefono}" onkeypress="if (event.keyCode === 13) {
+                            focoBoton('formProveedor:guardar', 'formProveedor:modificar');
+                            return false;
+                                    }"/> <!-- 13= al codico ASSI del enter-->     
+                <br></br>
+                <br></br>
+
+                <!--Botones guardar y modificar en el formulario de ingreso-->
+
+                <p:commandButton id="guardar" value="Guardar" update="@form,tables" styleClass="rounded-button" action ="#{beanProveedor.insertar2()}" oncomplete="habilita('formProveedor:guardar', 'formProveedor:modificar');foco('formProveedor:nombre')"/>
+                <p:commandButton id="modificar" value="Modificar" update="@form,tables" styleClass="rounded-button ui-button-success" action ="#{beanProveedor.modificar()}" oncomplete="habilita('formProveedor:guardar', 'formProveedor:modificar');foco('formProveedor:nombre')"/>
+
+                <!--update="@form,tables" actualizar datos de las tablas-->
+            </p:panel>
+
+        </h:form>
+
+        <!--Tabla que nos muestra lo que esta ingresado en la BDD-->
+        <h:form id="tables">
+            <div class="card">
+                <p:dataTable var="provider" value="#{beanProveedor.listaProovedores}" rowsPerPageTemplate="5,10,15" paginator="true" rows="10">
+
+                    <p:column headerText="Primer Nombre" sortBy="#{provider.nombre}" filterBy="#{provider.nombre}">
+                        <h:outputText value="#{provider.nombre}" /> 
+                    </p:column>
+
+                    <p:column headerText="Dirección" sortBy="#{provider.direccion}" filterBy="#{provider.direccion}">
+                        <h:outputText value="#{provider.direccion}" />
+                    </p:column>   
+
+                    <p:column headerText="Teléfono" sortBy="#{provider.telefono}" filterBy="#{provider.telefono}">
+                        <h:outputText value="#{provider.telefono}" />
+                    </p:column>
+
+                    <!--Botones de moficar y anular dentro de la tabla-->
+
+                    <p:column headerText="Modificar">
+                        <p:commandButton value="Modificar" update="formProveedor" styleClass="rounded-button ui-button-success" action ="#{beanProveedor.selecionarDatos(provider)}" oncomplete="habilita('formProveedor:modificar','formProveedor:guardar'),foco('formProveedor:nombre')"/>
+                    </p:column>
+                    <p:column headerText="Anular">
+                        <p:commandButton value="Anular" update="anular" styleClass="rounded-button ui-button-danger" action ="#{beanProveedor.selecionarDatos(provider)}" onclick="PF('dlg2').show()"/>
+                    </p:column>
+                </p:dataTable>
+            </div>
+        </h:form>
+
+        <!--Ventana que se despliega al usar el boton de anular-->
+        <p:dialog header="Anular Proovedor" widgetVar="dlg2" minHeight="40" width="350" showEffect="fade" modal="true">
+            <h:form id="anular">
+                <p class="m-0">
+                    ¿Desea anular el siguiente proveedor?
+                </p>
+
+                <!--Muestra la informacion de la opcion que queremos manipular-->
+                <h:outputText value="Nombre: #{beanProveedor.nombre}"/>
+                <br></br>
+                <br></br> 
+                <h:outputText value="Dirección: #{beanProveedor.direccion}"/>        
+                <br></br>
+                <br></br>   
+                <h:outputText value="Dirección: #{beanProveedor.telefono}"/>        
+                <br></br>
+                <br></br>
+                <!--Botones para confirmar o desconfirmar la anulacion-->
+                <p:commandButton value="Confirmar" update="@form,tables" styleClass="rounded-button ui-button-danger" onclick="PF('dlg2').close()" action ="#{beanProveedor.anular()}"/>
+                <p:commandButton value="Cancelar" update="@form,tables" styleClass="rounded-button ui-button-danger" onclick="PF('dlg2').close()" action ="#{beanProveedor.limpiar()}"/>
+            </h:form>
+        </p:dialog>
+
+    </h:body>
 </html>
