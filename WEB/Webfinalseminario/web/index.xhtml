@@ -44,21 +44,21 @@ and open the template in the editor.
                                     <div class="col-md-6">
                                         <div class="form-outline mb-4">
                                             <h5>Usuario</h5>
-                                            <p:inputText id="nombreProducto" value="#{login.nombre}" class="form-control" />
+                                            <p:inputText id="nombreProducto" value="#{sessionBean.usuarioSession}" class="form-control" />
                                         </div>
                                     </div>
                                     <br> </br>
                                     <div class="col-md-6">
                                         <div class="form-outline mb-3">
                                             <h5>Contraseña</h5>
-                                            <p:password id="pass" value="#{login.contra}" toggleMask="true" redisplay="true" class="form-control" />
+                                            <p:password id="pass" value="#{login.contrasena}" toggleMask="true" redisplay="true" class="form-control" />
                                         </div>
                                     </div>
                                 </div>
 
 
                                 <div class="form-outline mb-3">
-                                    <p:commandButton value="Iniciar sesión" actionListener="#{login.validar()}" />
+                                    <p:commandButton value="Iniciar sesión" actionListener="#{login.irPrincipal()}" />
 
                                 </div>
                             </h:form>

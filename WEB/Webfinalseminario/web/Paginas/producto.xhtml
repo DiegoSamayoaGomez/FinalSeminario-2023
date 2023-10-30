@@ -6,7 +6,7 @@
       xmlns:p="http://primefaces.org/ui">
 
     <h:head>
-        <script type="text/javascript" src="../Archivos/script.js"></script>
+        <script type="text/javascript" src="../archivos/script.js"></script>
         <title>Productos</title>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"/>
     </h:head>
@@ -31,11 +31,15 @@
                 foco('formProducto:cantidad');
                 return false;
             }"/> <!-- 13= al codico ASSI del enter-->
+            <br></br>
+            <br></br>
                 <h5>Cantidad</h5>
                 <p:inputText id="cantidad" value="#{beanProducto.cantidad}" onkeypress="if (event.keyCode === 13) {
                             foco('formProducto:precio');
                             return false;
                         }"/>
+                <br></br>
+                <br></br>
                 <h5>Precio</h5>
                 <p:inputText id="precio" value="#{beanProducto.precio}" onkeypress="if (event.keyCode === 13) {
                             focoBoton('formProducto:guardar', 'formProducto:modificar');

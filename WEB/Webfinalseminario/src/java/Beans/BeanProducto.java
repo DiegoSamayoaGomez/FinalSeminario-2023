@@ -68,7 +68,7 @@ public class BeanProducto{
                 limpiar();
                 context.addMessage(null, new FacesMessage("Exito","Reguistro modificado"));
             }else{
-                context.addMessage(null, new FacesMessage("Exito","Revise que no los datos ingresados sean correctos"));
+                context.addMessage(null, new FacesMessage("Error","Revise que no los datos ingresados sean correctos"));
             }
         }catch(Exception e){
             context.addMessage(null, new FacesMessage("Error","Error"+e));
