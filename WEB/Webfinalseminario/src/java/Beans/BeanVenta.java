@@ -75,7 +75,7 @@ public class BeanVenta {
         List<POJOs.Cliente> lstCliente = CRUDs.CRUDCliente.universo();
         for (POJOs.Cliente cliente : lstCliente) {
 
-            SelectItem clienteItem = new SelectItem(cliente.getIdCliente(), "Nombre " + cliente.getNombre() + " Apellido =" + cliente.getApellido());
+            SelectItem clienteItem = new SelectItem(cliente.getIdCliente(), cliente.getNombre() + " " + cliente.getApellido());
             getListaCliente().add(clienteItem);
         }
         return getListaCliente();
