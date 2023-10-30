@@ -1,5 +1,5 @@
 package POJOs;
-// Generated 27/10/2023 03:26:35 PM by Hibernate Tools 4.3.1
+// Generated 29/10/2023 02:21:05 PM by Hibernate Tools 4.3.1
 
 
 import java.util.HashSet;
@@ -11,7 +11,7 @@ import java.util.Set;
 public class TipoPago  implements java.io.Serializable {
 
 
-     private int idTipoPago;
+     private Integer idTipoPago;
      private Boolean estado;
      private String nombre;
      private Set<Compra> compras = new HashSet<Compra>(0);
@@ -20,23 +20,18 @@ public class TipoPago  implements java.io.Serializable {
     public TipoPago() {
     }
 
-	
-    public TipoPago(int idTipoPago) {
-        this.idTipoPago = idTipoPago;
-    }
-    public TipoPago(int idTipoPago, Boolean estado, String nombre, Set<Compra> compras, Set<Venta> ventas) {
-       this.idTipoPago = idTipoPago;
+    public TipoPago(Boolean estado, String nombre, Set<Compra> compras, Set<Venta> ventas) {
        this.estado = estado;
        this.nombre = nombre;
        this.compras = compras;
        this.ventas = ventas;
     }
    
-    public int getIdTipoPago() {
+    public Integer getIdTipoPago() {
         return this.idTipoPago;
     }
     
-    public void setIdTipoPago(int idTipoPago) {
+    public void setIdTipoPago(Integer idTipoPago) {
         this.idTipoPago = idTipoPago;
     }
     public Boolean getEstado() {

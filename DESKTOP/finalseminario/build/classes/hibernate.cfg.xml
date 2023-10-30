@@ -38,15 +38,13 @@ Version 2 license, then the option applies only if the new code is
 made subject to such option by the copyright holder.
 
 Contributor(s):
-    <property name="hibernate.connection.url">jdbc:mysql://localhost:3307/finalseminario?serverTimezone=UTC</property>
 -->
 <hibernate-configuration>
   <session-factory>
     <property name="hibernate.connection.driver_class">com.mysql.cj.jdbc.Driver</property>
-    <property name="hibernate.connection.url">jdbc:mysql://localhost:3308/finalseminario?useUnicode=true&amp;useJDBCCompliantTimezoneShift=true&amp;useLegacyDatetimeCode=false&amp;serverTimezone=UTC&amp;useSSL=false&amp;allowPublicKeyRetrieval=true</property>
-    
+    <property name="hibernate.connection.url">jdbc:mysql://localhost:3307/finalseminario?useUnicode=true&amp;useJDBCCompliantTimezoneShift=true&amp;useLegacyDatetimeCode=false&amp;serverTimezone=UTC&amp;useSSL=false&amp;allowPublicKeyRetrieval=true</property>
     <property name="hibernate.connection.username">root</property>
-    <property name="hibernate.connection.password">Seminar1O22023</property>
+    <property name="hibernate.connection.password">root</property>
     <property name="hibernate.current_session_context_class">thread</property>
     <mapping resource="POJOs/DetalleVenta.hbm.xml"/>
     <mapping resource="POJOs/Rol.hbm.xml"/>

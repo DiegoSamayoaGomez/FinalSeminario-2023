@@ -23,95 +23,122 @@ and open the template in the editor.
 
     <h:body>
         <!--Barra de menú principal -->
-        <div class="card">
-            <div class="card-body m-3">
-                <blockquote class="blockquote mb-0 text-center">
-                    <p>Menú principal</p>
-                </blockquote>
+        <!-- Image and text -->
+        <nav class="navbar navbar-dark bg-dark">
+            <a class="navbar-brand " href="#">
+                <img src="http://www.clipartbest.com/cliparts/xTg/Lbz/xTgLbzAXc.png" width="30" height="30" class="d-inline-block align-top" alt="icono"/>
+                Inicio
+            </a>
+
+            <a href="/Webfinalseminario" class="btn btn-danger">Salir</a>
+        </nav>
+
+        <div class="jumbotron jumbotron-fluid">
+            <div class="container d-flex justify-content-center">
+                <h1 class="display-4">Bienvenido</h1>
+
+            </div>
+        </div>
+        <div class="d-flex justify-content-center ">
+            <div class="card border-dark mb-3" style="max-width: 18rem;">
+
+                <div class="d-flex justify-content-center align-items-center">
+                    <img src="https://www.iconbunny.com/icons/media/catalog/product/1/5/1543.13-clients-icon-iconbunny.jpg" class="card-img-top" alt="Imagen" style="max-height: 150px; max-width: 150px;"/>
+                </div>
+                <div class="card-body text-dark">
+                    <h5 class="card-title">Clientes</h5>
+                    <p class="card-text">
+                        Visualiza, crea, edita y elimina los clientes registrados en nuestra tienda.
+                    </p>
+
+                    <a href="/Webfinalseminario/Paginas/cliente.xhtml" class="btn btn-primary">Ir a clientes</a>
+                </div>
+            </div>
+
+            <div class="card border-dark mb-3" style="max-width: 18rem;">
+
+                <div class="d-flex justify-content-center align-items-center">
+                    <img src="https://thumbs.dreamstime.com/b/color-silhouette-hand-holding-sealed-packing-box-vector-illustration-87240345.jpg" class="card-img-top" alt="Imagen" style="max-height: 150px; max-width: 150px;"/>
+                </div>
+                <div class="card-body text-dark">
+                    <h5 class="card-title">Ventas</h5>
+                    <p class="card-text">
+                        Realiza una venta hacia un cliente registrado. Incluye la opción de reportes.
+
+                    </p>
+                    <a href="/Webfinalseminario/Paginas/venta.xhtml" class="btn btn-secondary">Ir a ventas</a>
+                </div>
+            </div>
+
+            <div class="card border-dark mb-3" style="max-width: 18rem;">
+
+                <div class="d-flex justify-content-center align-items-center">
+                    <img src="https://cdn1.iconfinder.com/data/icons/kitchen-and-food-2/44/toaster-512.png" class="card-img-top" alt="Imagen" style="max-height: 150px; max-width: 150px;"/>
+                </div>
+                <div class="card-body text-dark">
+                    <h5 class="card-title">Productos</h5>
+                    <p class="card-text">
+                        Visualiza, crea, edita y elimina los clientes registrados en nuestra tienda.
+                    </p>
+                    <a href="/Webfinalseminario/Paginas/producto.xhtml" class="btn btn-success">Ir a productos</a>
+                </div>
+            </div>
+
+            <div class="card border-dark mb-3" style="max-width: 18rem;">
+
+                <div class="d-flex justify-content-center align-items-center">
+                    <img src="https://icon-library.com/images/purchase-icon-png/purchase-icon-png-19.jpg" class="card-img-top" alt="Imagen" style="max-height: 150px; max-width: 150px;"/>
+                </div>
+                <div class="card-body text-dark">
+                    <h5 class="card-title">Compras</h5>
+                    <p class="card-text">
+                        Realiza una compra hacia un proveedor registrado. Incluye la opción de reportes.
+                    </p>
+                    <a href="/Webfinalseminario/Paginas/compra.xhtml" class="btn btn-danger">Ir a compras</a>
+                </div>
+            </div>
+
+            <div class="card border-dark mb-3" style="max-width: 18rem;">
+
+                <div class="d-flex justify-content-center align-items-center">
+                    <img src="https://cdn4.iconfinder.com/data/icons/logistics-and-supply-chain-management-filled-outli/64/supply-chain-management-logistic-research-customer-process-1024.png" class="card-img-top" alt="Imagen" style="max-height: 150px; max-width: 150px;"/>
+                </div>
+                <div class="card-body text-dark">
+                    <h5 class="card-title">Proveedores</h5>
+                    <p class="card-text">
+                        Visualiza, crea, edita y elimina los proveedores registrados en nuestra tienda.
+                    </p>
+                    <a href="/Webfinalseminario/Paginas/proveedor.xhtml" class="btn btn-warning">Ir a proveedores</a>
+                </div>
             </div>
         </div>
 
 
 
-        <!--Inicio de tarjetas con boostrap-->
-        <div class="row row-cols-1 row-cols-md-3 g-4 m-3">
 
-            <div class="col">
-                <div class="card">                  
-                    <img src="./Imagenes/testHoja.jpg" class="card-img-top" alt="No encontrado"/>
-                    <div class="card-body">
-                        <h5 class="card-title">Título</h5>
-                        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                        <a href="#" class="btn btn-primary">Vamos</a>
-                    </div>
-                </div>
-            </div>
+        <!--Inicio de tarjetas con boostrap-->  
 
-            <div class="col">
-                <div class="card">                  
-                    <img src="./Imagenes/testHoja.jpg" class="card-img-top" alt="No encontrado"/>
-                    <div class="card-body">
-                        <h5 class="card-title">Título</h5>
-                        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                        <a href="#" class="btn btn-primary">Vamos</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col">
-                <div class="card">                  
-                    <img src="./Imagenes/testHoja.jpg" class="card-img-top" alt="No encontrado"/>
-                    <div class="card-body">
-                        <h5 class="card-title">Título</h5>
-                        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                        <a href="#" class="btn btn-primary">Vamos</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col">
-                <div class="card">                  
-                    <img src="./Imagenes/testHoja.jpg" class="card-img-top" alt="No encontrado"/>
-                    <div class="card-body">
-                        <h5 class="card-title">Título</h5>
-                        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                        <a href="#" class="btn btn-primary">Vamos</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col">
-                <div class="card">                  
-                    <img src="./Imagenes/testHoja.jpg" class="card-img-top" alt="No encontrado"/>
-                    <div class="card-body">
-                        <h5 class="card-title">Título</h5>
-                        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                        <a href="#" class="btn btn-primary">Vamos</a>
-                    </div>
-                </div>
-            </div>
-
-        </div>
 
         <!--Fin de tarjetas con boostrap-->
 
-
+        <!-- MENU DE PRIMEFACES
         <h:form>            
-<<<<<<< HEAD
+
             <p:dock position="bottom">                
                 <p:menuitem value="Clientes" icon="/Imagenes/cliente.png" url="../Webfinalseminario/Paginas/cliente.xhtml"/>
                 <p:menuitem value="Ventas" icon="/Imagenes/venta.png" url="#"/>
                 <p:menuitem value="Productos" icon="/Imagenes/producto.png" url="../Webfinalseminario/Paginas/producto.xhtml"/>
-=======
-            <p:dock position="bottom">
+
+
                 <p:menuitem value="Clientes" icon="/Imagenes/cliente.png" url="#"/>
                 <p:menuitem value="Ventas" icon="/Imagenes/venta.png" url="/Webfinalseminario/Paginas/venta.xhtml"/>
                 <p:menuitem value="Productos" icon="/Imagenes/producto.png" url="#"/>
->>>>>>> 37c34536e76a1ebf8e1d41386320665a1a079abd
+
                 <p:menuitem value="Proveedor" icon="/Imagenes/proveedor.png" url="#"/>
                 <p:menuitem value="Compras" icon="/Imagenes/compra.png" url="/Webfinalseminario/Paginas/compra.xhtml"/>
             </p:dock>
         </h:form>
+         -->
     </h:body>
 
 </html>

@@ -7,9 +7,20 @@
 
     <h:head>
         <script type="text/javascript" src="../Archivos/script.js"></script>
+        <title>Productos</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"/>
     </h:head>
 
     <h:body onload="habilita('formProducto:guardar', 'formProducto:modificar');foco('formProducto:nombre');#{beanProducto.limpiar()}">
+        <nav class="navbar navbar-dark bg-success">
+            <a class="navbar-brand" href="#">
+                <img src="https://cdn1.iconfinder.com/data/icons/kitchen-and-food-2/44/toaster-512.png" width="30" height="30" class="d-inline-block align-top" alt="icono"/>
+                Ventas
+            </a>
+
+            <a href="/Webfinalseminario/Paginas/menu.xhtml" class="btn btn-dark">Volver</a>
+        </nav>
+
         <!-- Fromulario para ingresar datos en la BDD-->
         <h:form id="formProducto">
             <!-- <p:growl/> Muestra un mensaje emergente-->
@@ -17,9 +28,9 @@
             <p:panel header="Productos">
                 <h5>Nombre de Producto</h5>
                 <p:inputText id="nombre" value="#{beanProducto.nombre}" onkeypress="if (event.keyCode === 13) {
-                            foco('formProducto:cantidad');
-                            return false;
-                        }"/> <!-- 13= al codico ASSI del enter-->
+                foco('formProducto:cantidad');
+                return false;
+            }"/> <!-- 13= al codico ASSI del enter-->
                 <h5>Cantidad</h5>
                 <p:inputText id="cantidad" value="#{beanProducto.cantidad}" onkeypress="if (event.keyCode === 13) {
                             foco('formProducto:precio');
@@ -30,8 +41,8 @@
                             focoBoton('formProducto:guardar', 'formProducto:modificar');
                             return false;
                                     }"/>
-                        <br></br>
-                        <br></br>
+                <br></br>
+                <br></br>
                 <p:commandButton id="guardar" value="Guardar" update="@form,tables" styleClass="rounded-button" action ="#{beanProducto.insertar2()}" oncomplete="habilita('formProducto:guardar','formProducto:modificar');foco('formProducto:nombreProducto')"/>
                 <p:commandButton id="modificar" value="Modificar" update="@form,tables" styleClass="rounded-button ui-button-success" action ="#{beanProducto.modificar()}" oncomplete="habilita('formProducto:modificar,'formProducto:guardar');foco('formProducto:nombreProducto')"/>
                 <!--update="@form,tables" actualizar datos de las tablas-->

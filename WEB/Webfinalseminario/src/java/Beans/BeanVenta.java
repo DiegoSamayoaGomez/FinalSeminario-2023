@@ -254,8 +254,9 @@ public class BeanVenta {
 
         try {
             //System.out.println("id producto+" + idProducto + " cantidad=" + cantidad + " monto=" + monto);
-
             boolean flag = CRUDs.CRUDVenta.update(idVenta);
+
+            //boolean flag = CRUDs.CRUDVenta.update(idVenta);
             if (flag) {
                 reporteVenta();
                 limpiarDetalle();

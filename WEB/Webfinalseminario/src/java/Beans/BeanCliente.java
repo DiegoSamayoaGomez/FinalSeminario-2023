@@ -30,6 +30,7 @@ public class BeanCliente {
 
     @PostConstruct
     public void mostrar(){
+        
         setListaClientes(CRUDs.CRUDCliente.universo());
     }
     

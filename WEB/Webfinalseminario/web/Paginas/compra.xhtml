@@ -12,10 +12,20 @@
     <h:head>
         <title>Compras</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"/>
     </h:head>
 
     <!-- Cuerpo (body) -->
     <h:body>
+        <nav class="navbar navbar-dark bg-danger">
+            <a class="navbar-brand" href="#">
+                <img src="https://cdn1.iconfinder.com/data/icons/kitchen-and-food-2/44/toaster-512.png" width="30" height="30" class="d-inline-block align-top" alt="icono"/>
+                Compras
+            </a>
+
+            <a href="/Webfinalseminario/Paginas/menu.xhtml" class="btn btn-dark">Volver</a>
+        </nav>
 
 
         <!-- Encabezado de venta (CRUDVenta)-->
@@ -62,7 +72,7 @@
                 </p:panelGrid>
 
                 <h5>Cantidad</h5>
-                <h:inputText id="Cantidad" styleClass="cantidad" class="form-control" value="#{beanCompra.cantidad}"  onkeypress="if (event.keyCode === 13) {#{beanCompra.montoTotal()};
+                <h:inputText id="Cantidad" style="max-width: 200px;" styleClass="cantidad" class="form-control" value="#{beanCompra.cantidad}"  onkeypress="if (event.keyCode === 13) {#{beanCompra.montoTotal()};
                             return false;
                         }">
                     <p:ajax event="keyup" update=":detalle:montoTotal" listener="#{beanCompra.montoTotal()}" />
@@ -112,12 +122,16 @@
                     </p:dataTable>
                 </div>
             </p:panel>
-            <center>
-                <b> <h5>Total</h5>
-                    <p:inputText id="montoTotal" label="montoTotal" value="#{beanCompra.totalFactura}" disabled="true"></p:inputText>
-                </b>
-                <h:commandLink id="confirmar" value="Cerrar compra" class="btn btn-primary" actionListener="#{beanCompra.cerrarCompra()}"/>
-            </center>
+            <div class="m-5">
+                <center>
+                    <b>
+                        <h5>Total</h5>
+                        <p:inputText id="montoTotal" label="montoTotal" value="#{beanCompra.totalFactura}" disabled="true"></p:inputText>
+                    </b>
+                    <h:commandLink id="confirmar" value="Cerrar compra" class="btn btn-primary" actionListener="#{beanCompra.cerrarCompra()}"/>
+                </center>
+            </div>
+
 
         </h:form>
 

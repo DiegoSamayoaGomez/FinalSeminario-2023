@@ -19,27 +19,29 @@ import javax.faces.context.FacesContext;
 @ManagedBean
 @ViewScoped
 public class login {
+
     private String nombre;
     private String contra;
     private List usuarios;
 
     //@PostConstruct
-
     public void validar() {
         boolean flag = false;
         FacesContext context = FacesContext.getCurrentInstance();
         try {
-            for(int i=0;i<CRUDs.CRUDUsuario.universo().size();i++){
-                if(nombre.equals(CRUDs.CRUDUsuario.universo().get(i).getNombre())){
-                    if(contra.equals(CRUDs.CRUDUsuario.universo().get(i).getContrasenia())){
+            for (int i = 0; i < CRUDs.CRUDUsuario.universo().size(); i++) {
+                if (nombre.equals(CRUDs.CRUDUsuario.universo().get(i).getNombre())) {
+                    if (contra.equals(CRUDs.CRUDUsuario.universo().get(i).getContrasenia())) {
                         flag = true;
+                        System.out.println("ID DE USUARIO:" + CRUDs.CRUDUsuario.universo().get(i).getIdUsuario());
                     }
-                }                
+                }
             }
             if (flag) {
+                context.addMessage(null, new FacesMessage("Exito", "Redigir"));
                 System.out.println("Ready");
                 FacesContext.getCurrentInstance().getExternalContext().redirect("Paginas/menu.xhtml");
-                context.addMessage(null, new FacesMessage("Exito", "Redigir"));
+
             } else {
                 context.addMessage(null, new FacesMessage("Error", "Credenciales invalidas"));
             }
